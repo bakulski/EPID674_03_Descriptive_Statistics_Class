@@ -49,11 +49,11 @@ sessionInfo() # record the versions of packages used in the current session
 
 # Specify file directories
 ```{r directories}
-#directory <- "/cloud/project/" #Class option when coding on RStudio Cloud
+directory <- "/cloud/project/" #Class option when coding on RStudio Cloud
 
 # Three alternate options to customize and specify source data directory if programming on a personal computer (only need to do the one that works for you)
 # directory<-"M:/EPID674/Data/" # Alternate option 1: location of the parent dataset in afs space of school computer
-directory <- "/Volumes/GoogleDrive/My Drive/Teaching/EPID674/2020_fall/EPID674_Week3_Class/" # Alternate option 2: location of data on my Macbook
+#directory <- "/Volumes/GoogleDrive/My Drive/Teaching/EPID674/2020_fall/EPID674_Week3_Class/" # Alternate option 2: location of data on my Macbook
 # directory<-"C:/Users/bakulski/Documents/EPID674/Data/" #Alternate option 3: location of data on a personal PC
 
 date <- format(Sys.Date(), "%Y%m%d")
