@@ -1,0 +1,332 @@
+---
+title: "EPID674 Epidemiologic Data Analysis using R"
+subtitle: "Data Management with R"
+author: "Kelly Bakulski"
+date: "Last compiled on `r format(Sys.Date(), '%B %d, %Y')`"
+output:
+   word_document: default
+   html_document: 
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE) # This is how you set options for all chunks of code
+```
+
+
+## Chapter 3, Data Management with R
+# Install new packages
+```{r install packages, eval=FALSE}
+
+# Install packages. Do this only once.
+options(repos="https://cran.rstudio.com" )
+install.packages("foreign")
+install.packages("Hmisc")
+install.packages("stargazer")
+install.packages("compareGroups")
+install.packages("car")
+
+# To avoid installing every time: change set up in curly brackets to eval=FALSE
+```
+
+
+# Set up: Query the current R environment and load relevant packages
+```{r packages}
+search() # list the packages, environments, or data frames
+ls() # list the objects
+
+##### Load these packages for the current session
+library(foreign)
+library(Hmisc)
+library(epiDisplay)
+library(stargazer)
+library(compareGroups)
+library(car)
+
+sessionInfo() # record the versions of packages used in the current session
+```
+
+# Specify file directories
+```{r directories}
+#directory <- "/cloud/project/" #Class option when coding on RStudio Cloud
+
+# Three alternate options to customize and specify source data directory if programming on a personal computer (only need to do the one that works for you)
+# directory<-"M:/EPID674/Data/" # Alternate option 1: location of the parent dataset in afs space of school computer
+directory <- "/Volumes/GoogleDrive/My Drive/Teaching/EPID674/2020_fall/EPID674_Week3_Class/" # Alternate option 2: location of data on my Macbook
+# directory<-"C:/Users/bakulski/Documents/EPID674/Data/" #Alternate option 3: location of data on a personal PC
+
+date <- format(Sys.Date(), "%Y%m%d")
+```
+
+
+# Load data, attach data, remake useful variables
+```{r read data}
+
+# Check the file path
+paste0(directory, "nhanes3.rda")
+# Load the saved R data
+load(paste0(directory, "nhanes3.rda"))
+### Or load RData if you saved the workspace image
+# load(".RData")
+
+
+# Remake a few variables from last class if they are no longer in your environment
+sex1 <- factor(nhanes$sex, levels = c(1, 2), labels = c("male", "female"))
+AGE5b <- cut(nhanes$age, quantile(nhanes$age, c(0, .2, .4, .6, .8, 1)), include.lowest = T) # quintiles
+AGE5c <- cut(nhanes$age, breaks = c(19, 40, 50, 60, 70, 90))
+age5c <- unclass(AGE5c)
+```
+
+# Assign names to objects, bind columns to dataframe
+```{r names and cbind}
+# Assign the subject IDs as the rownames
+rownames(nhanes)[1:10]
+nhanes$seqn[1:10]
+rownames(nhanes) <- nhanes$seqn
+rownames(nhanes)[1:10]
+
+### Bind vectors/matrices/data
+nhanes.a <- cbind(nhanes, sex1, AGE5b, age5c) # bind by column (merge)
+head(nhanes.a)
+```
+
+# Set up a simulated dataset with unequal rows and columns, attempt to bind
+```{r simulate uneven dataset}
+nhanes.left <- nhanes[, 1:20]
+nhanes.right <- nhanes[, c(2, 21:37)]
+names(nhanes.left)
+names(nhanes.right)
+
+nhanes.right <- nhanes.right[-c(1:30), ]
+dim(nhanes.left)
+dim(nhanes.right)
+# nhanes.b<-cbind(nhanes.left, nhanes.right)
+# does not work b/c of different number of rows, must comment out for knitting
+
+## let's also shuffle nhanes3.right
+nhanes.right1 <- nhanes.right[sample(nrow(nhanes.right)), ]
+nhanes.right[1:10, 1:3]
+nhanes.right1[1:10, 1:3]
+```
+
+# Use the merge() function to combine datasets, explore function options
+```{r merge}
+nhanes.both <- merge(nhanes.left, nhanes.right1, by = "seqn")
+names(nhanes.both)
+nhanes[1:40, c(1:3, 21:22)]
+nhanes.both[1:40, c(1:3, 21:22)]
+dim(nhanes)
+dim(nhanes.both)
+
+nhanes.both1 <- merge(nhanes.left, nhanes.right1, by = "seqn", all.x = T)
+dim(nhanes.both1)
+nhanes.both1[1:40, c(1:3, 21:22)]
+
+nhanes.both2 <- merge(nhanes.right1, nhanes.left, by = "seqn", all.x = T)
+dim(nhanes.both2)
+nhanes.both2[1:40, c(1:3, 21:22)]
+
+nhanes.both3 <- merge(nhanes.right1, nhanes.left, by = "seqn", all.y = T)
+dim(nhanes.both3)
+nhanes.both3[1:40, c(1:3, 21:22)]
+```
+
+# Sorting/ordering data
+```{r sort order}
+nhanes$age[1:10]
+sort(nhanes$age)[1:10]
+sort(nhanes$age, decreasing = TRUE)[1:10] # reverse sort
+
+nhanes[1:10, c("seqn", "age", "sex")]
+nhanes.b <- nhanes[order(nhanes$age), ]
+nhanes.b[1:10, c("seqn", "age", "sex")]
+nhanes.c <- nhanes[order(nhanes$age, nhanes$sex), ] # sort based on 2 variables
+nhanes.c[1:10, c("seqn", "age", "sex")]
+```
+
+# Create a new variable in a dataset using calculations
+```{r create numeric variable}
+## Create a new variable in a dataset using calculations
+nhanes$map <- nhanes$dbp + (nhanes$sbp - nhanes$dbp) / 3
+summary(nhanes$map)
+
+nhanes.b$map <- with(nhanes.b, dbp + (sbp - dbp) / 3)
+summary(nhanes.b$map)
+
+nhanes.c <- transform(nhanes.c, map = dbp + (sbp - dbp) / 3)
+summary(nhanes.c$map)
+```
+
+
+# Recode a variable or replace a value within a variable
+```{r recode replace}
+# Replace
+nhanes$age1 <- replace(nhanes$age, nhanes$age == 90, NA)
+summary(nhanes$age1)
+
+# Recode
+# the recode function in the library 'car'
+
+nhanes[c(1:20), ]
+# convert sex=2 to 0
+nhanes$male <- recode(nhanes$sex, "2=0; else=nhanes$sex")
+nhanes[c(1:20), c("sex", "male")]
+
+# Recode 65+ as 1, other as 2
+nhanes$age2 <- recode(nhanes$age, "65:90=1; else=2")
+nhanes[c(1:20), c("age", "age2")]
+
+### please note that the function 'recode' in epiDisplay is different than in the car package.
+### which is similar to the replace() function
+### use package::function to overcome masking
+```
+
+# Do Exercise 3A
+
+# Check function default settings for handling missing values
+```{r check default missing}
+### How do functions handle missing values?
+cor(nhanes$age, nhanes$bmi)
+summary(nhanes$bmi)
+summ(nhanes$bmi)
+# What options can you use to overcome the default missing data setting?
+cor(nhanes$age, nhanes$bmi, use = "complete")
+mean(nhanes$bmi)
+mean(nhanes$bmi, na.rm = T)
+mean(na.omit(nhanes$bmi))
+```
+
+# Use the na.omit() function to drop missing observations, make a new dataset
+```{r na.omit}
+nhanes.d <- na.omit(nhanes[, c(
+  "age", "bpb", "sbp", "dbp", "bmi", "packyrs",
+  "hematoc", "educ", "smk", "alc", "med_ht", "diag_dm"
+)])
+nhanes.e <- na.omit(nhanes)
+dim(nhanes.d)
+dim(nhanes.e)
+
+cor(nhanes.d$age, nhanes.d$bmi)
+cor(nhanes.e$age, nhanes.e$bmi)
+```
+
+# Use a logical vector and square brackets to index non-missing observations
+```{r logical index}
+OK <- !is.na(nhanes$age) & !is.na(nhanes$bmi)
+cor(nhanes$age[OK], nhanes$bmi[OK])
+
+OK <- OK & !is.na(nhanes$hematoc) & !is.na(nhanes$chol) & !is.na(nhanes$educ) & !is.na(nhanes$smk) & !is.na(nhanes$packyrs) &
+  !is.na(nhanes$alc) & !is.na(nhanes$med_ht) & !is.na(nhanes$diag_dm)
+cor(nhanes$age[OK], nhanes$bmi[OK])
+cor(nhanes$age[OK == 1], nhanes$bmi[OK == 1])
+```
+
+# Strategies to make repeated tasks in your coding more efficient
+
+# Use the apply family of functions for more efficient coding
+```{r apply}
+sapply(nhanes, mean)
+tapply(nhanes$bmi, age5c, mean)
+tapply(nhanes$bmi, age5c, summary)
+
+sapply(nhanes, mean, na.rm = T)
+# you can get the same results using apply() or lapply().
+apply(nhanes, 2, mean, na.rm = T)
+# 2 indicates columns, 1 does rows
+lapply(nhanes, mean, na.rm = T)
+
+codebook(nhanes.a) # returns summary stat by variable characteristics
+summ(nhanes)
+```
+
+# Try compiling results with a for loop. 
+```{r for loop}
+# First prep the output dataset
+out <- data.frame(matrix(nrow = ncol(nhanes), ncol = 3))
+colnames(out) <- c("variable", "mean", "sd")
+out[, 1] <- colnames(nhanes)
+# Then initiate the loop
+for (i in 1:ncol(nhanes)) {
+  out[i, 2] <- mean(as.numeric(nhanes[, i]), na.rm = T)
+  out[i, 3] <- sd(as.numeric(nhanes[, i]), na.rm = T)
+}
+out
+```
+
+
+# Try compiling/exporting results with stargazer
+```{r stargazer}
+stargazer(nhanes)
+stargazer(nhanes, type = "text", title = "Descriptive Statistics", digits = 1)
+# stargazer(nhanes, type="text", title="Descriptive Statistics", digits=1, out="Descriptive.txt")
+```
+
+
+# Generate descriptive statistics for each group
+```{r compareGroups}
+sapply(nhanes[nhanes$age >= 65, ], mean, na.rm = T) # for a subset age>=65
+tapply(nhanes$bmi, age5c, mean, na.rm = T) # stratified by age
+
+# Try compiling/exporting results by group with compareGroups
+createTable(compareGroups(nhanes)) # for all variables
+createTable(compareGroups(sex1 ~ . - strata - seqn, data = nhanes.a)) # for all variables, stratified by sex
+
+## similar grouped outputs can be obtained using aggregate()
+aggregate(nhanes$bmi, by = list(Sex = nhanes$sex, Race = nhanes$race), mean, na.rm = T) # stratified by sex and race
+aggregate(nhanes[, c("sbp", "dbp")], by = list(Sex = nhanes$sex, Race = nhanes$race), mean) # for multiple columns at once
+```
+
+
+# Date and Time 
+
+# Input variable formats, convert to desired format
+```{r date format}
+# create some dates to use in this exercise
+bdays <- c("11/2/1959", "1/1/1970")
+bdays
+# convert to Julian dates
+bdays.julian <- as.Date(bdays, format = "%m/%d/%Y")
+bdays.julian
+
+as.numeric(bdays.julian)
+
+bdays.am <- format(bdays.julian, "%b %d, %Y")
+bdays.am
+
+# day of the week
+format(bdays.julian, "%a-%d%b%y")
+weekdays(bdays.julian)
+```
+
+
+# Calculate age as of today's date
+```{r age from date}
+date.today <- Sys.Date() # Sys.time or Sys.Date: Current time/Date
+date.today
+
+agecomp <- (date.today - bdays.julian) / 365.25
+agecomp
+
+agecomp2 <- trunc(as.numeric(agecomp))
+
+
+# create data frame
+bd <- data.frame(Birthday = bdays, Standard = bdays.julian, Julian = as.numeric(bdays.julian), Age = agecomp2)
+bd
+```
+
+
+# Paste function
+```{r paste}
+# combine (paste) two or more variables that are parts of date
+day1 <- c("12", "13", "14")
+month1 <- c("07", "08", "12")
+year1 <- c("1980", "2000", "2010")
+paste(day1, month1, year1)
+
+as.Date(paste(day1, month1, year1), "%d %m %Y")
+```
+
+# Do Exercise 3B
+

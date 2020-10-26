@@ -1,0 +1,58 @@
+---
+title: "EPID674 Epidemiologic Data Analysis using R"
+subtitle: "Homework 3A"
+author: "Insert Your Name Here"
+date: "Last compiled on `r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  word_document: default
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(foreign)
+library(epiDisplay)
+library(stats)
+library(Hmisc)
+library(gmodels)
+
+directory <- "/cloud/project/"
+```
+
+# Problem 1
+## Create vectors called 'ht' and 'wt' corresponding to the heights and weights of the 10 family members.
+## Assign the family members to the 'names' attribute of these vectors.
+## Make a data frame with ht and wt.
+## Create a new variable in the data frame, body mass index (BMI) of each person where BMI = wt/ht2.
+## Print the data frame in your R output or take a screen shot of your data frame.
+## Save the data frame as a permanent R data object.
+
+```{r problem 1}
+# Insert code for problem 1 here
+```
+# Interpret your answer for problem 1 here
+
+
+# Problem 2
+## Export the data frame as a csv file. Attach a screen shot of the file.
+```{r problem 2}
+# Insert code for problem 2 here
+```
+# Interpret your answer for problem 2 here
+
+
+# Problem 3
+## Identify the persons who have the lowest and highest BMI.
+```{r problem 3}
+# Insert code for problem 3 here
+```
+# Interpret your answer for problem 3 here
+
+
+# Problem 4
+## Calculate the mean, median and SD of BMI.
+```{r problem 4}
+# Insert code for problem 4 here
+```
+# Interpret your answer for problem 4 here
+

@@ -1,0 +1,43 @@
+---
+title: "EPID674 Epidemiologic Data Analysis using R"
+subtitle: "Homework 3B"
+author: "Insert Your Name Here"
+date: "Last compiled on `r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  word_document: default
+---
+
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(foreign)
+library(epiDisplay)
+library(stats)
+library(Hmisc)
+library(gmodels)
+
+directory <- "/cloud/project/"
+```
+
+## Using the dataset “bpa.rda”, answer the following:
+
+Type-2 diabetes mellitus (T2DM) can be defined as hemoglobin A1c ≥ 6.5% OR use of diabetes medication. Note: participants with high A1c and taking medication should also be considered T2DM cases.
+Create a binary variable for T2DM using a1c and dmmed.
+
+# Problem 1
+## How many cases (N) of T2DM are in this population? What is the frequency (percentage) of T2DM in the population?
+
+
+```{r problem 1}
+# Insert code for problem 1 here
+```
+# Interpret your answer for problem 1 here
+
+
+#Problem 2. 
+##Compute the means and SDs of waist circumference and total cholesterol by T2DM and sex.
+```{r problem 2}
+# Insert code for problem 2 here
+```
+# Interpret your answer for problem 2 here
