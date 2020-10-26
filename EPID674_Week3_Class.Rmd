@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE) # This is how you set options for all chunks 
 
 ## Chapter 3, Data Management with R
 # Install new packages
-```{r install packages, eval=FALSE}
+```{r install packages, eval=TRUE}
 
 # Install packages. Do this only once.
 options(repos="https://cran.rstudio.com" )
