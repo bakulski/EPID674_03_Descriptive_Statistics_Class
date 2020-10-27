@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE) # This is how you set options for all chunks 
 
 ## Chapter 3, Data Management with R
 # Install new packages
-```{r install packages, eval=TRUE}
+```{r install packages, eval=FALSE}
 
 # Install packages. Do this only once.
 options(repos="https://cran.rstudio.com" )
@@ -26,6 +26,7 @@ install.packages("Hmisc")
 install.packages("stargazer")
 install.packages("compareGroups")
 install.packages("car")
+install.packages("epiDisplay")
 
 # To avoid installing every time: change set up in curly brackets to eval=FALSE
 ```
@@ -270,10 +271,14 @@ tapply(nhanes$bmi, age5c, mean, na.rm = T) # stratified by age
 
 # Try compiling/exporting results by group with compareGroups
 createTable(compareGroups(nhanes)) # for all variables
-createTable(compareGroups(sex1 ~ . - strata - seqn, data = nhanes.a)) # for all variables, stratified by sex
-
+bivariate.table<-createTable(compareGroups(sex1 ~ . - strata - seqn, data = nhanes.a)) # for all variables, stratified by sex
+bivariate.table 
+# export2word(bivariate.table, file=paste0(directory,"bivariate_table.docx"))
+  
 ## similar grouped outputs can be obtained using aggregate()
 aggregate(nhanes$bmi, by = list(Sex = nhanes$sex, Race = nhanes$race), mean, na.rm = T) # stratified by sex and race
+aggregate(nhanes$race, by = list(nhanes$sex), table, na.rm = T) # stratified by sex and race
+
 aggregate(nhanes[, c("sbp", "dbp")], by = list(Sex = nhanes$sex, Race = nhanes$race), mean) # for multiple columns at once
 ```
 
