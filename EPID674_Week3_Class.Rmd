@@ -1,12 +1,14 @@
 ---
 title: "EPID674 Epidemiologic Data Analysis using R"
-subtitle: "Data Management with R"
 author: "Kelly Bakulski"
 date: "Last compiled on `r format(Sys.Date(), '%B %d, %Y')`"
 output:
-   html_document: 
-    toc: true
-    toc_float: true
+  word_document:
+    toc: yes
+  html_document:
+    toc: yes
+    toc_float: yes
+subtitle: Data Management with R
 ---
 
 ```{r setup, include=FALSE}
