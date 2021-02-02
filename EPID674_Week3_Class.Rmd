@@ -4,7 +4,6 @@ subtitle: "Data Management with R"
 author: "Kelly Bakulski"
 date: "Last compiled on `r format(Sys.Date(), '%B %d, %Y')`"
 output:
-   word_document: default
    html_document: 
     toc: true
     toc_float: true
@@ -19,11 +18,11 @@ knitr::opts_chunk$set(echo = TRUE) # This is how you set options for all chunks 
 # Install new packages
 ```{r install packages, eval=FALSE}
 
-# Install packages. Do this only once.
+# Install packages. In general, do this only once.
+# We have this completed for you on Cloud
 options(repos="https://cran.rstudio.com" )
 install.packages("foreign")
 install.packages("Hmisc")
-install.packages("stargazer")
 install.packages("compareGroups")
 install.packages("car")
 install.packages("epiDisplay")
@@ -41,7 +40,6 @@ ls() # list the objects
 library(foreign)
 library(Hmisc)
 library(epiDisplay)
-library(stargazer)
 library(compareGroups)
 library(car)
 
@@ -49,27 +47,23 @@ sessionInfo() # record the versions of packages used in the current session
 ```
 
 # Specify file directories
-```{r directories}
-directory <- "/cloud/project/" #Class option when coding on RStudio Cloud
+```{r directory}
+directory <- "/cloud/project" #Class option when coding on RStudio Cloud
 
 # Three alternate options to customize and specify source data directory if programming on a personal computer (only need to do the one that works for you)
 # directory<-"M:/EPID674/Data/" # Alternate option 1: location of the parent dataset in afs space of school computer
 #directory <- "/Volumes/GoogleDrive/My Drive/Teaching/EPID674/2020_fall/EPID674_Week3_Class/" # Alternate option 2: location of data on my Macbook
 # directory<-"C:/Users/bakulski/Documents/EPID674/Data/" #Alternate option 3: location of data on a personal PC
-
-date <- format(Sys.Date(), "%Y%m%d")
 ```
 
 
-# Load data, attach data, remake useful variables
-```{r read data}
+# Load data, remake useful variables
+```{r load_data}
 
 # Check the file path
-paste0(directory, "nhanes3.rda")
+file.path(directory, "nhanes3.rda")
 # Load the saved R data
-load(paste0(directory, "nhanes3.rda"))
-### Or load RData if you saved the workspace image
-# load(".RData")
+load(file.path(directory, "nhanes3.rda"))
 
 
 # Remake a few variables from last class if they are no longer in your environment
@@ -80,7 +74,7 @@ age5c <- unclass(AGE5c)
 ```
 
 # Assign names to objects, bind columns to dataframe
-```{r names and cbind}
+```{r names_and_cbind}
 # Assign the subject IDs as the rownames
 rownames(nhanes)[1:10]
 nhanes$seqn[1:10]
@@ -93,7 +87,7 @@ head(nhanes.a)
 ```
 
 # Set up a simulated dataset with unequal rows and columns, attempt to bind
-```{r simulate uneven dataset}
+```{r simulate_uneven_dataset}
 nhanes.left <- nhanes[, 1:20]
 nhanes.right <- nhanes[, c(2, 21:37)]
 names(nhanes.left)
@@ -133,12 +127,8 @@ dim(nhanes.both3)
 nhanes.both3[1:40, c(1:3, 21:22)]
 ```
 
-# Sorting/ordering data
-```{r sort order}
-nhanes$age[1:10]
-sort(nhanes$age)[1:10]
-sort(nhanes$age, decreasing = TRUE)[1:10] # reverse sort
-
+# Ordering data
+```{r order}
 nhanes[1:10, c("seqn", "age", "sex")]
 nhanes.b <- nhanes[order(nhanes$age), ]
 nhanes.b[1:10, c("seqn", "age", "sex")]
@@ -147,7 +137,7 @@ nhanes.c[1:10, c("seqn", "age", "sex")]
 ```
 
 # Create a new variable in a dataset using calculations
-```{r create numeric variable}
+```{r create_numeric_variable}
 ## Create a new variable in a dataset using calculations
 nhanes$map <- nhanes$dbp + (nhanes$sbp - nhanes$dbp) / 3
 summary(nhanes$map)
@@ -161,32 +151,37 @@ summary(nhanes.c$map)
 
 
 # Recode a variable or replace a value within a variable
-```{r recode replace}
+```{r recode_replace}
 # Replace
+summary(nhanes$age)
+length(nhanes$age[nhanes$age==90]) #What do you expect?
 nhanes$age1 <- replace(nhanes$age, nhanes$age == 90, NA)
-summary(nhanes$age1)
+summary(nhanes$age1) #What do you get? 
+#Does it match your expectations?
 
 # Recode
 # the recode function in the library 'car'
-
+table(nhanes$sex)
 nhanes[c(1:20), ]
 # convert sex=2 to 0
 nhanes$male <- recode(nhanes$sex, "2=0; else=nhanes$sex")
 nhanes[c(1:20), c("sex", "male")]
 
 # Recode 65+ as 1, other as 2
+length(nhanes$age[nhanes$age>=65 & nhanes$age<=90]) #What do you expect?
 nhanes$age2 <- recode(nhanes$age, "65:90=1; else=2")
 nhanes[c(1:20), c("age", "age2")]
+table(nhanes$age2) #What do you get?
 
-### please note that the function 'recode' in epiDisplay is different than in the car package.
-### which is similar to the replace() function
-### use package::function to overcome masking
+### Note the function 'recode' in epiDisplay is different than in the car package.
+### It is similar to the replace() function
+### use package::function to overcome function masking between packages
 ```
 
 # Do Exercise 3A
 
 # Check function default settings for handling missing values
-```{r check default missing}
+```{r check_default_missing}
 ### How do functions handle missing values?
 cor(nhanes$age, nhanes$bmi)
 summary(nhanes$bmi)
@@ -213,36 +208,33 @@ cor(nhanes.e$age, nhanes.e$bmi)
 ```
 
 # Use a logical vector and square brackets to index non-missing observations
-```{r logical index}
+```{r logical_index}
 OK <- !is.na(nhanes$age) & !is.na(nhanes$bmi)
 cor(nhanes$age[OK], nhanes$bmi[OK])
 
-OK <- OK & !is.na(nhanes$hematoc) & !is.na(nhanes$chol) & !is.na(nhanes$educ) & !is.na(nhanes$smk) & !is.na(nhanes$packyrs) &
-  !is.na(nhanes$alc) & !is.na(nhanes$med_ht) & !is.na(nhanes$diag_dm)
-cor(nhanes$age[OK], nhanes$bmi[OK])
 cor(nhanes$age[OK == 1], nhanes$bmi[OK == 1])
 ```
 
 # Strategies to make repeated tasks in your coding more efficient
 
 # Use the apply family of functions for more efficient coding
-```{r apply}
-sapply(nhanes, mean)
+```{r apply_aggregate}
+apply(nhanes, 2, mean)
 tapply(nhanes$bmi, age5c, mean)
 tapply(nhanes$bmi, age5c, summary)
 
-sapply(nhanes, mean, na.rm = T)
-# you can get the same results using apply() or lapply().
-apply(nhanes, 2, mean, na.rm = T)
-# 2 indicates columns, 1 does rows
-lapply(nhanes, mean, na.rm = T)
+## similar grouped outputs can be obtained using aggregate()
+aggregate(nhanes$bmi, by = list(Sex = nhanes$sex, Race = nhanes$race), mean, na.rm = T) # stratified by sex and race
+aggregate(nhanes$race, by = list(nhanes$sex), table, na.rm = T) # stratified by sex and race
+
+aggregate(nhanes[, c("sbp", "dbp")], by = list(Sex = nhanes$sex, Race = nhanes$race), mean) # for multiple columns at once
 
 codebook(nhanes.a) # returns summary stat by variable characteristics
 summ(nhanes)
 ```
 
 # Try compiling results with a for loop. 
-```{r for loop}
+```{r for_loop}
 # First prep the output dataset
 out <- data.frame(matrix(nrow = ncol(nhanes), ncol = 3))
 colnames(out) <- c("variable", "mean", "sd")
@@ -255,15 +247,6 @@ for (i in 1:ncol(nhanes)) {
 out
 ```
 
-
-# Try compiling/exporting results with stargazer
-```{r stargazer}
-stargazer(nhanes)
-stargazer(nhanes, type = "text", title = "Descriptive Statistics", digits = 1)
-# stargazer(nhanes, type="text", title="Descriptive Statistics", digits=1, out="Descriptive.txt")
-```
-
-
 # Generate descriptive statistics for each group
 ```{r compareGroups}
 sapply(nhanes[nhanes$age >= 65, ], mean, na.rm = T) # for a subset age>=65
@@ -275,18 +258,13 @@ bivariate.table<-createTable(compareGroups(sex1 ~ . - strata - seqn, data = nhan
 bivariate.table 
 # export2word(bivariate.table, file=paste0(directory,"bivariate_table.docx"))
   
-## similar grouped outputs can be obtained using aggregate()
-aggregate(nhanes$bmi, by = list(Sex = nhanes$sex, Race = nhanes$race), mean, na.rm = T) # stratified by sex and race
-aggregate(nhanes$race, by = list(nhanes$sex), table, na.rm = T) # stratified by sex and race
-
-aggregate(nhanes[, c("sbp", "dbp")], by = list(Sex = nhanes$sex, Race = nhanes$race), mean) # for multiple columns at once
 ```
 
 
 # Date and Time 
 
 # Input variable formats, convert to desired format
-```{r date format}
+```{r date_format}
 # create some dates to use in this exercise
 bdays <- c("11/2/1959", "1/1/1970")
 bdays
@@ -306,7 +284,7 @@ weekdays(bdays.julian)
 
 
 # Calculate age as of today's date
-```{r age from date}
+```{r age_from_date}
 date.today <- Sys.Date() # Sys.time or Sys.Date: Current time/Date
 date.today
 
