@@ -1,14 +1,12 @@
 ---
 title: "EPID674 Epidemiologic Data Analysis using R"
+subtitle: "Data Management with R"
 author: "Kelly Bakulski"
 date: "Last compiled on `r format(Sys.Date(), '%B %d, %Y')`"
 output:
-  word_document:
-    toc: yes
   html_document:
     toc: yes
     toc_float: yes
-subtitle: Data Management with R
 ---
 
 ```{r setup, include=FALSE}
@@ -52,10 +50,7 @@ sessionInfo() # record the versions of packages used in the current session
 ```{r directory}
 directory <- "/cloud/project" #Class option when coding on RStudio Cloud
 
-# Three alternate options to customize and specify source data directory if programming on a personal computer (only need to do the one that works for you)
-# directory<-"M:/EPID674/Data/" # Alternate option 1: location of the parent dataset in afs space of school computer
-#directory <- "/Volumes/GoogleDrive/My Drive/Teaching/EPID674/2020_fall/EPID674_Week3_Class/" # Alternate option 2: location of data on my Macbook
-# directory<-"C:/Users/bakulski/Documents/EPID674/Data/" #Alternate option 3: location of data on a personal PC
+# Remember to customize and specify the directory if you're programming on a personal computer 
 ```
 
 
@@ -91,11 +86,9 @@ head(nhanes.a)
 # Set up a simulated dataset with unequal rows and columns, attempt to bind
 ```{r simulate_uneven_dataset}
 nhanes.left <- nhanes[, 1:20]
-nhanes.right <- nhanes[, c(2, 21:37)]
+nhanes.right <- nhanes[-c(1:30), c(2, 21:37)]
 names(nhanes.left)
 names(nhanes.right)
-
-nhanes.right <- nhanes.right[-c(1:30), ]
 dim(nhanes.left)
 dim(nhanes.right)
 # nhanes.b<-cbind(nhanes.left, nhanes.right)
@@ -143,12 +136,6 @@ nhanes.c[1:10, c("seqn", "age", "sex")]
 ## Create a new variable in a dataset using calculations
 nhanes$map <- nhanes$dbp + (nhanes$sbp - nhanes$dbp) / 3
 summary(nhanes$map)
-
-nhanes.b$map <- with(nhanes.b, dbp + (sbp - dbp) / 3)
-summary(nhanes.b$map)
-
-nhanes.c <- transform(nhanes.c, map = dbp + (sbp - dbp) / 3)
-summary(nhanes.c$map)
 ```
 
 
@@ -180,7 +167,7 @@ table(nhanes$age2) #What do you get?
 ### use package::function to overcome function masking between packages
 ```
 
-# Do Exercise 3A
+# Ready to do Exercise 3A
 
 # Check function default settings for handling missing values
 ```{r check_default_missing}
@@ -313,5 +300,5 @@ paste(day1, month1, year1)
 as.Date(paste(day1, month1, year1), "%d %m %Y")
 ```
 
-# Do Exercise 3B
+# Ready to do Exercise 3B
 
