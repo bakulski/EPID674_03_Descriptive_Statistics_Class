@@ -13,9 +13,10 @@ output:
 knitr::opts_chunk$set(echo = TRUE) # This is how you set options for all chunks of code
 ```
 
-
 ## Chapter 3, Data Management with R
+
 # Install new packages
+
 ```{r install packages, eval=FALSE}
 
 # Install packages. Do this only once.
@@ -30,8 +31,8 @@ install.packages("epiDisplay")
 # To avoid installing every time: change set up in curly brackets to eval=FALSE
 ```
 
-
 # Set up: Query the current R environment and load relevant packages
+
 ```{r packages}
 search() # list the packages, environments, or data frames
 ls() # list the objects
@@ -47,8 +48,8 @@ library(here)
 sessionInfo() # record the versions of packages used in the current session
 ```
 
-
 # Load data, remake useful variables
+
 ```{r load_data}
 
 # Check the file path
@@ -65,6 +66,7 @@ age5c <- unclass(AGE5c)
 ```
 
 # Assign names to objects, bind columns to dataframe
+
 ```{r names_and_cbind}
 # Assign the subject IDs as the rownames
 rownames(nhanes)[1:10]
@@ -78,6 +80,7 @@ head(nhanes.a)
 ```
 
 # Set up a simulated dataset with unequal rows and columns, attempt to bind
+
 ```{r simulate_uneven_dataset}
 nhanes.left <- nhanes[, 1:20]
 nhanes.right <- nhanes[-c(1:30), c(2, 21:37)]
@@ -95,6 +98,7 @@ nhanes.right1[1:10, 1:3]
 ```
 
 # Use the merge() function to combine datasets, explore function options
+
 ```{r merge}
 nhanes.both <- merge(nhanes.left, nhanes.right1, by = "seqn")
 names(nhanes.both)
@@ -117,6 +121,7 @@ nhanes.both3[1:40, c(1:3, 21:22)]
 ```
 
 # Ordering data
+
 ```{r order}
 nhanes[1:10, c("seqn", "age", "sex")]
 nhanes.b <- nhanes[order(nhanes$age), ]
@@ -126,14 +131,15 @@ nhanes.c[1:10, c("seqn", "age", "sex")]
 ```
 
 # Create a new variable in a dataset using calculations
+
 ```{r create_numeric_variable}
 ## Create a new variable in a dataset using calculations
 nhanes$map <- nhanes$dbp + (nhanes$sbp - nhanes$dbp) / 3
 summary(nhanes$map)
 ```
 
-
 # Recode a variable or replace a value within a variable
+
 ```{r recode_replace}
 # Replace
 summary(nhanes$age)
@@ -164,6 +170,7 @@ table(nhanes$age2) #What do you get?
 # Ready to do Exercise 3A
 
 # Check function default settings for handling missing values
+
 ```{r check_default_missing}
 ### How do functions handle missing values?
 cor(nhanes$age, nhanes$bmi)
@@ -177,6 +184,7 @@ mean(na.omit(nhanes$bmi))
 ```
 
 # Use the na.omit() function to drop missing observations, make a new dataset
+
 ```{r na.omit}
 nhanes.d <- na.omit(nhanes[, c(
   "age", "bpb", "sbp", "dbp", "bmi", "packyrs",
@@ -191,6 +199,7 @@ cor(nhanes.e$age, nhanes.e$bmi)
 ```
 
 # Use a logical vector and square brackets to index non-missing observations
+
 ```{r logical_index}
 OK <- !is.na(nhanes$age) & !is.na(nhanes$bmi)
 cor(nhanes$age[OK], nhanes$bmi[OK])
@@ -201,6 +210,7 @@ cor(nhanes$age[OK == 1], nhanes$bmi[OK == 1])
 # Strategies to make repeated tasks in your coding more efficient
 
 # Use the apply family of functions for more efficient coding
+
 ```{r apply_aggregate}
 apply(nhanes, 2, mean)
 tapply(nhanes$bmi, age5c, mean)
@@ -216,7 +226,8 @@ codebook(nhanes.a) # returns summary stat by variable characteristics
 summ(nhanes)
 ```
 
-# Try compiling results with a for loop. 
+# Try compiling results with a for loop.
+
 ```{r for_loop}
 # First prep the output dataset
 out <- data.frame(matrix(nrow = ncol(nhanes), ncol = 3))
@@ -231,6 +242,7 @@ out
 ```
 
 # Generate descriptive statistics for each group
+
 ```{r compareGroups}
 sapply(nhanes[nhanes$age >= 65, ], mean, na.rm = T) # for a subset age>=65
 tapply(nhanes$bmi, age5c, mean, na.rm = T) # stratified by age
@@ -243,10 +255,10 @@ bivariate.table
   
 ```
 
-
-# Date and Time 
+# Date and Time
 
 # Input variable formats, convert to desired format
+
 ```{r date_format}
 # create some dates to use in this exercise
 bdays <- c("11/2/1959", "1/1/1970")
@@ -265,8 +277,8 @@ format(bdays.julian, "%a-%d%b%y")
 weekdays(bdays.julian)
 ```
 
-
 # Calculate age as of today's date
+
 ```{r age_from_date}
 date.today <- Sys.Date() # Sys.time or Sys.Date: Current time/Date
 date.today
@@ -282,8 +294,8 @@ bd <- data.frame(Birthday = bdays, Standard = bdays.julian, Julian = as.numeric(
 bd
 ```
 
-
 # Paste function
+
 ```{r paste}
 # combine (paste) two or more variables that are parts of date
 day1 <- c("12", "13", "14")
@@ -295,4 +307,3 @@ as.Date(paste(day1, month1, year1), "%d %m %Y")
 ```
 
 # Ready to do Exercise 3B
-
