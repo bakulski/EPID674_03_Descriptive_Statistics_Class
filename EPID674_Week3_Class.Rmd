@@ -18,8 +18,8 @@ knitr::opts_chunk$set(echo = TRUE) # This is how you set options for all chunks 
 # Install new packages
 ```{r install packages, eval=FALSE}
 
-# Install packages. In general, do this only once.
-# We have this completed for you on Cloud
+# Install packages. Do this only once.
+# We have this completed for you on Cloud, so you do not need to run this.
 options(repos="https://cran.rstudio.com" )
 install.packages("foreign")
 install.packages("Hmisc")
@@ -42,15 +42,9 @@ library(Hmisc)
 library(epiDisplay)
 library(compareGroups)
 library(car)
+library(here)
 
 sessionInfo() # record the versions of packages used in the current session
-```
-
-# Specify file directories
-```{r directory}
-directory <- "/cloud/project" #Class option when coding on RStudio Cloud
-
-# Remember to customize and specify the directory if you're programming on a personal computer 
 ```
 
 
@@ -58,9 +52,9 @@ directory <- "/cloud/project" #Class option when coding on RStudio Cloud
 ```{r load_data}
 
 # Check the file path
-file.path(directory, "nhanes3.rda")
+here("nhanes3.rda")
 # Load the saved R data
-load(file.path(directory, "nhanes3.rda"))
+load(here("nhanes3.rda"))
 
 
 # Remake a few variables from last class if they are no longer in your environment

@@ -7,6 +7,7 @@ output:
   word_document: default
 ---
 
+#Load your relevant libraries
 ```{r setup}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -16,7 +17,6 @@ library(stats)
 library(Hmisc)
 library(gmodels)
 
-directory <- "/cloud/project/"
 ```
 
 # Problem 1

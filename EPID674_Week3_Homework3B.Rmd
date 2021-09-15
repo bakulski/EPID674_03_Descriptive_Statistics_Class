@@ -7,7 +7,7 @@ output:
   word_document: default
 ---
 
-
+# Load your relevant libraries, load your dataset
 ```{r setup}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -16,8 +16,9 @@ library(epiDisplay)
 library(stats)
 library(Hmisc)
 library(gmodels)
+library(here)
 
-directory <- "/cloud/project/"
+load(here("bpa.rda"))
 ```
 
 ## Using the dataset “bpa.rda”, answer the following:
