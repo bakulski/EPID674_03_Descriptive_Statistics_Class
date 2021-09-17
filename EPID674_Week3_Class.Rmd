@@ -17,6 +17,8 @@ knitr::opts_chunk$set(echo = TRUE) # This is how you set options for all chunks 
 
 # Install new packages
 
+# TEST UPDATE
+
 ```{r install packages, eval=FALSE}
 
 # Install packages. Do this only once.
