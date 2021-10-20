@@ -54,119 +54,119 @@ sessionInfo() # record the versions of packages used in the current session
 
 ```{r load_data}
 
-# Check the file path
-here("nhanes3.rda")
-# Load the saved R data
-load(here("nhanes3.rda"))
-
-
-# Remake a few variables from last class if they are no longer in your environment
-sex1 <- factor(nhanes$sex, levels = c(1, 2), labels = c("male", "female"))
-AGE5b <- cut(nhanes$age, quantile(nhanes$age, c(0, .2, .4, .6, .8, 1)), include.lowest = T) # quintiles
-AGE5c <- cut(nhanes$age, breaks = c(19, 40, 50, 60, 70, 90))
-age5c <- unclass(AGE5c)
+# # Check the file path
+# here("nhanes3.rda")
+# # Load the saved R data
+# load(here("nhanes3.rda"))
+# 
+# 
+# # Remake a few variables from last class if they are no longer in your environment
+# sex1 <- factor(nhanes$sex, levels = c(1, 2), labels = c("male", "female"))
+# AGE5b <- cut(nhanes$age, quantile(nhanes$age, c(0, .2, .4, .6, .8, 1)), include.lowest = T) # quintiles
+# AGE5c <- cut(nhanes$age, breaks = c(19, 40, 50, 60, 70, 90))
+# age5c <- unclass(AGE5c)
 ```
 
 # Assign names to objects, bind columns to dataframe
 
 ```{r names_and_cbind}
-# Assign the subject IDs as the rownames
-rownames(nhanes)[1:10]
-nhanes$seqn[1:10]
-rownames(nhanes) <- nhanes$seqn
-rownames(nhanes)[1:10]
-
-### Bind vectors/matrices/data
-nhanes.a <- cbind(nhanes, sex1, AGE5b, age5c) # bind by column (merge)
-head(nhanes.a)
+# # Assign the subject IDs as the rownames
+# rownames(nhanes)[1:10]
+# nhanes$seqn[1:10]
+# rownames(nhanes) <- nhanes$seqn
+# rownames(nhanes)[1:10]
+# 
+# ### Bind vectors/matrices/data
+# nhanes.a <- cbind(nhanes, sex1, AGE5b, age5c) # bind by column (merge)
+# head(nhanes.a)
 ```
 
 # Set up a simulated dataset with unequal rows and columns, attempt to bind
 
 ```{r simulate_uneven_dataset}
-nhanes.left <- nhanes[, 1:20]
-nhanes.right <- nhanes[-c(1:30), c(2, 21:37)]
-names(nhanes.left)
-names(nhanes.right)
-dim(nhanes.left)
-dim(nhanes.right)
-# nhanes.b<-cbind(nhanes.left, nhanes.right)
-# does not work b/c of different number of rows, must comment out for knitting
-
-## let's also shuffle nhanes3.right
-nhanes.right1 <- nhanes.right[sample(nrow(nhanes.right)), ]
-nhanes.right[1:10, 1:3]
-nhanes.right1[1:10, 1:3]
+# nhanes.left <- nhanes[, 1:20]
+# nhanes.right <- nhanes[-c(1:30), c(2, 21:37)]
+# names(nhanes.left)
+# names(nhanes.right)
+# dim(nhanes.left)
+# dim(nhanes.right)
+# # nhanes.b<-cbind(nhanes.left, nhanes.right)
+# # does not work b/c of different number of rows, must comment out for knitting
+# 
+# ## let's also shuffle nhanes3.right
+# nhanes.right1 <- nhanes.right[sample(nrow(nhanes.right)), ]
+# nhanes.right[1:10, 1:3]
+# nhanes.right1[1:10, 1:3]
 ```
 
 # Use the merge() function to combine datasets, explore function options
 
 ```{r merge}
-nhanes.both <- merge(nhanes.left, nhanes.right1, by = "seqn")
-names(nhanes.both)
-nhanes[1:40, c(1:3, 21:22)]
-nhanes.both[1:40, c(1:3, 21:22)]
-dim(nhanes)
-dim(nhanes.both)
-
-nhanes.both1 <- merge(nhanes.left, nhanes.right1, by = "seqn", all.x = T)
-dim(nhanes.both1)
-nhanes.both1[1:40, c(1:3, 21:22)]
-
-nhanes.both2 <- merge(nhanes.right1, nhanes.left, by = "seqn", all.x = T)
-dim(nhanes.both2)
-nhanes.both2[1:40, c(1:3, 21:22)]
-
-nhanes.both3 <- merge(nhanes.right1, nhanes.left, by = "seqn", all.y = T)
-dim(nhanes.both3)
-nhanes.both3[1:40, c(1:3, 21:22)]
+# nhanes.both <- merge(nhanes.left, nhanes.right1, by = "seqn")
+# names(nhanes.both)
+# nhanes[1:40, c(1:3, 21:22)]
+# nhanes.both[1:40, c(1:3, 21:22)]
+# dim(nhanes)
+# dim(nhanes.both)
+# 
+# nhanes.both1 <- merge(nhanes.left, nhanes.right1, by = "seqn", all.x = T)
+# dim(nhanes.both1)
+# nhanes.both1[1:40, c(1:3, 21:22)]
+# 
+# nhanes.both2 <- merge(nhanes.right1, nhanes.left, by = "seqn", all.x = T)
+# dim(nhanes.both2)
+# nhanes.both2[1:40, c(1:3, 21:22)]
+# 
+# nhanes.both3 <- merge(nhanes.right1, nhanes.left, by = "seqn", all.y = T)
+# dim(nhanes.both3)
+# nhanes.both3[1:40, c(1:3, 21:22)]
 ```
 
 # Ordering data
 
 ```{r order}
-nhanes[1:10, c("seqn", "age", "sex")]
-nhanes.b <- nhanes[order(nhanes$age), ]
-nhanes.b[1:10, c("seqn", "age", "sex")]
-nhanes.c <- nhanes[order(nhanes$age, nhanes$sex), ] # sort based on 2 variables
-nhanes.c[1:10, c("seqn", "age", "sex")]
+# nhanes[1:10, c("seqn", "age", "sex")]
+# nhanes.b <- nhanes[order(nhanes$age), ]
+# nhanes.b[1:10, c("seqn", "age", "sex")]
+# nhanes.c <- nhanes[order(nhanes$age, nhanes$sex), ] # sort based on 2 variables
+# nhanes.c[1:10, c("seqn", "age", "sex")]
 ```
 
 # Create a new variable in a dataset using calculations
 
 ```{r create_numeric_variable}
-## Create a new variable in a dataset using calculations
-nhanes$map <- nhanes$dbp + (nhanes$sbp - nhanes$dbp) / 3
-summary(nhanes$map)
+# ## Create a new variable in a dataset using calculations
+# nhanes$map <- nhanes$dbp + (nhanes$sbp - nhanes$dbp) / 3
+# summary(nhanes$map)
 ```
 
 # Recode a variable or replace a value within a variable
 
 ```{r recode_replace}
-# Replace
-summary(nhanes$age)
-length(nhanes$age[nhanes$age==90]) #What do you expect?
-nhanes$age1 <- replace(nhanes$age, nhanes$age == 90, NA)
-summary(nhanes$age1) #What do you get? 
-#Does it match your expectations?
-
-# Recode
-# the recode function in the library 'car'
-table(nhanes$sex)
-nhanes[c(1:20), ]
-# convert sex=2 to 0
-nhanes$male <- recode(nhanes$sex, "2=0; else=nhanes$sex")
-nhanes[c(1:20), c("sex", "male")]
-
-# Recode 65+ as 1, other as 2
-length(nhanes$age[nhanes$age>=65 & nhanes$age<=90]) #What do you expect?
-nhanes$age2 <- recode(nhanes$age, "65:90=1; else=2")
-nhanes[c(1:20), c("age", "age2")]
-table(nhanes$age2) #What do you get?
-
-### Note the function 'recode' in epiDisplay is different than in the car package.
-### It is similar to the replace() function
-### use package::function to overcome function masking between packages
+# # Replace
+# summary(nhanes$age)
+# length(nhanes$age[nhanes$age==90]) #What do you expect?
+# nhanes$age1 <- replace(nhanes$age, nhanes$age == 90, NA)
+# summary(nhanes$age1) #What do you get? 
+# #Does it match your expectations?
+# 
+# # Recode
+# # the recode function in the library 'car'
+# table(nhanes$sex)
+# nhanes[c(1:20), ]
+# # convert sex=2 to 0
+# nhanes$male <- recode(nhanes$sex, "2=0; else=nhanes$sex")
+# nhanes[c(1:20), c("sex", "male")]
+# 
+# # Recode 65+ as 1, other as 2
+# length(nhanes$age[nhanes$age>=65 & nhanes$age<=90]) #What do you expect?
+# nhanes$age2 <- recode(nhanes$age, "65:90=1; else=2")
+# nhanes[c(1:20), c("age", "age2")]
+# table(nhanes$age2) #What do you get?
+# 
+# ### Note the function 'recode' in epiDisplay is different than in the car package.
+# ### It is similar to the replace() function
+# ### use package::function to overcome function masking between packages
 ```
 
 # Ready to do Exercise 3A
@@ -188,25 +188,25 @@ mean(na.omit(nhanes$bmi))
 # Use the na.omit() function to drop missing observations, make a new dataset
 
 ```{r na.omit}
-nhanes.d <- na.omit(nhanes[, c(
-  "age", "bpb", "sbp", "dbp", "bmi", "packyrs",
-  "hematoc", "educ", "smk", "alc", "med_ht", "diag_dm"
-)])
-nhanes.e <- na.omit(nhanes)
-dim(nhanes.d)
-dim(nhanes.e)
-
-cor(nhanes.d$age, nhanes.d$bmi)
-cor(nhanes.e$age, nhanes.e$bmi)
+# nhanes.d <- na.omit(nhanes[, c(
+#   "age", "bpb", "sbp", "dbp", "bmi", "packyrs",
+#   "hematoc", "educ", "smk", "alc", "med_ht", "diag_dm"
+# )])
+# nhanes.e <- na.omit(nhanes)
+# dim(nhanes.d)
+# dim(nhanes.e)
+# 
+# cor(nhanes.d$age, nhanes.d$bmi)
+# cor(nhanes.e$age, nhanes.e$bmi)
 ```
 
 # Use a logical vector and square brackets to index non-missing observations
 
 ```{r logical_index}
-OK <- !is.na(nhanes$age) & !is.na(nhanes$bmi)
-cor(nhanes$age[OK], nhanes$bmi[OK])
-
-cor(nhanes$age[OK == 1], nhanes$bmi[OK == 1])
+# OK <- !is.na(nhanes$age) & !is.na(nhanes$bmi)
+# cor(nhanes$age[OK], nhanes$bmi[OK])
+# 
+# cor(nhanes$age[OK == 1], nhanes$bmi[OK == 1])
 ```
 
 # Strategies to make repeated tasks in your coding more efficient
@@ -214,18 +214,18 @@ cor(nhanes$age[OK == 1], nhanes$bmi[OK == 1])
 # Use the apply family of functions for more efficient coding
 
 ```{r apply_aggregate}
-apply(nhanes, 2, mean)
-tapply(nhanes$bmi, age5c, mean)
-tapply(nhanes$bmi, age5c, summary)
-
-## similar grouped outputs can be obtained using aggregate()
-aggregate(nhanes$bmi, by = list(Sex = nhanes$sex, Race = nhanes$race), mean, na.rm = T) # stratified by sex and race
-aggregate(nhanes$race, by = list(nhanes$sex), table, na.rm = T) # stratified by sex and race
-
-aggregate(nhanes[, c("sbp", "dbp")], by = list(Sex = nhanes$sex, Race = nhanes$race), mean) # for multiple columns at once
-
-codebook(nhanes.a) # returns summary stat by variable characteristics
-summ(nhanes)
+# apply(nhanes, 2, mean)
+# tapply(nhanes$bmi, age5c, mean)
+# tapply(nhanes$bmi, age5c, summary)
+# 
+# ## similar grouped outputs can be obtained using aggregate()
+# aggregate(nhanes$bmi, by = list(Sex = nhanes$sex, Race = nhanes$race), mean, na.rm = T) # stratified by sex and race
+# aggregate(nhanes$race, by = list(nhanes$sex), table, na.rm = T) # stratified by sex and race
+# 
+# aggregate(nhanes[, c("sbp", "dbp")], by = list(Sex = nhanes$sex, Race = nhanes$race), mean) # for multiple columns at once
+# 
+# codebook(nhanes.a) # returns summary stat by variable characteristics
+# summ(nhanes)
 ```
 
 # Try compiling results with a for loop.
@@ -246,14 +246,14 @@ out
 # Generate descriptive statistics for each group
 
 ```{r compareGroups}
-sapply(nhanes[nhanes$age >= 65, ], mean, na.rm = T) # for a subset age>=65
-tapply(nhanes$bmi, age5c, mean, na.rm = T) # stratified by age
-
-# Try compiling/exporting results by group with compareGroups
-createTable(compareGroups(nhanes)) # for all variables
-bivariate.table<-createTable(compareGroups(sex1 ~ . - strata - seqn, data = nhanes.a)) # for all variables, stratified by sex
-bivariate.table 
-# export2word(bivariate.table, file=paste0(directory,"bivariate_table.docx"))
+# sapply(nhanes[nhanes$age >= 65, ], mean, na.rm = T) # for a subset age>=65
+# tapply(nhanes$bmi, age5c, mean, na.rm = T) # stratified by age
+# 
+# # Try compiling/exporting results by group with compareGroups
+# createTable(compareGroups(nhanes)) # for all variables
+# bivariate.table<-createTable(compareGroups(sex1 ~ . - strata - seqn, data = nhanes.a)) # for all variables, stratified by sex
+# bivariate.table 
+# # export2word(bivariate.table, file=paste0(directory,"bivariate_table.docx"))
   
 ```
 
