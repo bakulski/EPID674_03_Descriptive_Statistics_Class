@@ -1,6 +1,6 @@
 ---
 title: "EPID674 Epidemiologic Data Analysis using R"
-subtitle: "Data Management with R"
+subtitle: "Descriptive Statistics, Tables, Misc."
 author: "Kelly Bakulski"
 date: "Last compiled on `r format(Sys.Date(), '%B %d, %Y')`"
 output:
@@ -13,249 +13,255 @@ output:
 knitr::opts_chunk$set(echo = TRUE) # This is how you set options for all chunks of code
 ```
 
-## Chapter 3, Data Management with R
+## Chapter 3, Descriptive Statistics, Tables, Misc.
 
 # Install new packages
-
-# TEST UPDATE
 
 ```{r install packages, eval=FALSE}
 
 # Install packages. Do this only once.
 # We have this completed for you on Cloud, so you do not need to run this.
 options(repos="https://cran.rstudio.com" )
-install.packages("foreign")
-install.packages("Hmisc")
-install.packages("compareGroups")
-install.packages("car")
-install.packages("epiDisplay")
+install.packages("tidyverse")
+install.packages("here")
+install.packages("gtsummary")
+install.packages("flextable")
 
 # To avoid installing every time: change set up in curly brackets to eval=FALSE
 ```
 
-# Set up: Query the current R environment and load relevant packages
+# Set up: Query the current R environment, load relevant packages, load dataset created in Week 2
 
 ```{r packages}
+
 search() # list the packages, environments, or data frames
 ls() # list the objects
 
 ##### Load these packages for the current session
-library(foreign)
-library(Hmisc)
-library(epiDisplay)
-library(compareGroups)
-library(car)
+library(tidyverse)
 library(here)
+library(gtsummary)
+library(flextable)
 
 sessionInfo() # record the versions of packages used in the current session
+
+# Load saved NHANES dataset from Week 2
+load(here(("nhanes_dataset.rda")))
 ```
 
-# Load data, remake useful variables
 
-```{r load_data}
+# Data description functions, numeric variables
 
-# # Check the file path
-# here("nhanes3.rda")
-# # Load the saved R data
-# load(here("nhanes3.rda"))
-# 
-# 
-# # Remake a few variables from last class if they are no longer in your environment
-# sex1 <- factor(nhanes$sex, levels = c(1, 2), labels = c("male", "female"))
-# AGE5b <- cut(nhanes$age, quantile(nhanes$age, c(0, .2, .4, .6, .8, 1)), include.lowest = T) # quintiles
-# AGE5c <- cut(nhanes$age, breaks = c(19, 40, 50, 60, 70, 90))
-# age5c <- unclass(AGE5c)
+```{r descriptives_numeric_variable}
+
+# Base R method - quick, good for one variable at a time
+summary(nhanes_dataset$RIDAGEYR)
+# For missing values, include na.rm = TRUE:
+sd(nhanes_dataset$LBXIRN, na.rm = TRUE)
+
+# Tidyverse method - more code, but can be used to get summary statistics on multiple variables
+nhanes_dataset %>%
+  summarise(age_min = min(RIDAGEYR),
+            age_25_quart = quantile(RIDAGEYR, probs = 0.25),
+            age_mean = mean(RIDAGEYR),
+            age_median = median(RIDAGEYR),
+            age_75_quart = quantile(RIDAGEYR, probs = 0.75),
+            age_iqr = IQR(RIDAGEYR),
+            age_max = max(RIDAGEYR))
+
+# Calculating statistics by groups - tidyverse
+# Note: good practice to add ungroup() after using it to avoid the dataset staying grouped
+nhanes_dataset %>%
+  group_by(sex) %>%
+  summarise(age_min = min(RIDAGEYR),
+            age_25_quart = quantile(RIDAGEYR, probs = 0.25),
+            age_mean = mean(RIDAGEYR),
+            age_median = median(RIDAGEYR),
+            age_75_quart = quantile(RIDAGEYR, probs = 0.75),
+            age_iqr = IQR(RIDAGEYR),
+            age_max = max(RIDAGEYR)) %>%
+  ungroup()
+
+# Do activity with this example
+nhanes_dataset %>%
+  group_by(sex) %>%
+  summarise(age_mean = mean(RIDAGEYR),
+            pir_mean = mean(INDFMPIR, na.rm = TRUE)) %>%
+  ungroup()
 ```
 
-# Assign names to objects, bind columns to dataframe
+# Calculate descriptive statistics on a categorical variable
 
-```{r names_and_cbind}
-# # Assign the subject IDs as the rownames
-# rownames(nhanes)[1:10]
-# nhanes$seqn[1:10]
-# rownames(nhanes) <- nhanes$seqn
-# rownames(nhanes)[1:10]
-# 
-# ### Bind vectors/matrices/data
-# nhanes.a <- cbind(nhanes, sex1, AGE5b, age5c) # bind by column (merge)
-# head(nhanes.a)
+```{r categorical_variable_descriptives}
+
+# Base R method
+table(nhanes_dataset$race_eth)
+table(nhanes_dataset$race_eth, nhanes_dataset$sex)
 ```
 
-# Set up a simulated dataset with unequal rows and columns, attempt to bind
+# Create a publication-formatted table
 
-```{r simulate_uneven_dataset}
-# nhanes.left <- nhanes[, 1:20]
-# nhanes.right <- nhanes[-c(1:30), c(2, 21:37)]
-# names(nhanes.left)
-# names(nhanes.right)
-# dim(nhanes.left)
-# dim(nhanes.right)
-# # nhanes.b<-cbind(nhanes.left, nhanes.right)
-# # does not work b/c of different number of rows, must comment out for knitting
-# 
-# ## let's also shuffle nhanes3.right
-# nhanes.right1 <- nhanes.right[sample(nrow(nhanes.right)), ]
-# nhanes.right[1:10, 1:3]
-# nhanes.right1[1:10, 1:3]
+```{r}
+# Univariate table using gtsummary package
+nhanes_dataset %>%
+  select(-SEQN,
+         -SDMVSTRA,
+         -SDMVPSU,
+         -RIASEX,
+         -RIDRETH1,
+         -cut_groups) %>% #drop SEQN and survey variables so we don't get summary statistics for the identifiers or weights
+  tbl_summary()
+
+
+# Bivariate table by sex using gtsummary - will take about 5 seconds to run
+bivar_nhanes <- nhanes_dataset %>%
+  select(-SEQN,
+         -SDMVSTRA,
+         -SDMVPSU,
+         -RIASEX,
+         -RIDRETH1,
+         -cut_groups,
+         -LBXWBCSI,
+         -LBDLYMNO,
+         -LBDNENO,
+         -URXUAS,
+         -LBXCOT,
+         -LBXBCD,
+         -LBXBPB) %>%
+  tbl_summary(by = sex, #stratify by sex
+              label = list(RIDAGEYR    ~ "Age (years)", #update the variable names
+                           race_eth    ~ "Race/Ethnicity",
+                           INDFMPIR    ~ "Poverty-Income Ratio",
+                           LBXRBCSI    ~ "Red Blood Cell Count (million cells/uL)",
+                           LBXIRN      ~ "Iron (ug/dL)",
+                           iron_status ~ "Iron Status",
+                           nlr         ~ "Neutrophil:Lymphocyte Ratio"),
+              statistic = list(all_continuous() ~ "{mean} ({sd})", #use mean and standard deviation for continuous variables
+                               all_categorical() ~ "{n} ({p}%)"),  #use count and percentage for categorical variables
+              digits = list(all_categorical() ~ c(0, 1), #adds no decimal places to counts and one decimal to percentages
+                            all_continuous() ~ 1), #adds one decimal place to mean and sd values
+              missing_text = "Missing (n)"
+              ) %>%
+  add_p() %>% #compares male vs female, does not include overall in p-value calculation
+  add_overall() %>% #adds column with non-stratified summary statistics
+  modify_header(label ~ "**Variable**") %>% #the asterisks bold the label
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**Sex**") %>%
+  bold_labels()
+
+#View table
+bivar_nhanes
+
+
+# Save the table as a Word document - some formatting such as bold headers will be lost
+bivar_nhanes %>%
+  as_flex_table() %>%
+  save_as_docx(path = here("summary_stats_table.docx")) #Export the table to Word using flextable package
 ```
 
-# Use the merge() function to combine datasets, explore function options
 
-```{r merge}
-# nhanes.both <- merge(nhanes.left, nhanes.right1, by = "seqn")
-# names(nhanes.both)
-# nhanes[1:40, c(1:3, 21:22)]
-# nhanes.both[1:40, c(1:3, 21:22)]
-# dim(nhanes)
-# dim(nhanes.both)
-# 
-# nhanes.both1 <- merge(nhanes.left, nhanes.right1, by = "seqn", all.x = T)
-# dim(nhanes.both1)
-# nhanes.both1[1:40, c(1:3, 21:22)]
-# 
-# nhanes.both2 <- merge(nhanes.right1, nhanes.left, by = "seqn", all.x = T)
-# dim(nhanes.both2)
-# nhanes.both2[1:40, c(1:3, 21:22)]
-# 
-# nhanes.both3 <- merge(nhanes.right1, nhanes.left, by = "seqn", all.y = T)
-# dim(nhanes.both3)
-# nhanes.both3[1:40, c(1:3, 21:22)]
+# Do Exercise 2A
+
+
+# Create a subset of the dataset
+
+```{r subset}
+
+# Practice subset: Keep only the female participants
+nhanes_subset <- nhanes_dataset %>%
+  filter(sex == "Female")
+
+# Keep only the participants who are iron deficient and older than 60 years using filter()
+nhanes_subset <- nhanes_dataset %>%
+  filter(iron_status == "Deficient" & RIDAGEYR >= 60)
+
+# How many participants have complete data?
+nhanes_subset %>%
+  na.omit() %>% #exclude any participants with missing data
+  dim() #what are the dimensions after excluding missing data?
 ```
+
+
+
+# Do Exercise 2B
+
+
+
 
 # Ordering data
 
-```{r order}
-# nhanes[1:10, c("seqn", "age", "sex")]
-# nhanes.b <- nhanes[order(nhanes$age), ]
-# nhanes.b[1:10, c("seqn", "age", "sex")]
-# nhanes.c <- nhanes[order(nhanes$age, nhanes$sex), ] # sort based on 2 variables
-# nhanes.c[1:10, c("seqn", "age", "sex")]
-```
+```{r}
 
-# Create a new variable in a dataset using calculations
-
-```{r create_numeric_variable}
-# ## Create a new variable in a dataset using calculations
-# nhanes$map <- nhanes$dbp + (nhanes$sbp - nhanes$dbp) / 3
-# summary(nhanes$map)
-```
-
-# Recode a variable or replace a value within a variable
-
-```{r recode_replace}
-# # Replace
-# summary(nhanes$age)
-# length(nhanes$age[nhanes$age==90]) #What do you expect?
-# nhanes$age1 <- replace(nhanes$age, nhanes$age == 90, NA)
-# summary(nhanes$age1) #What do you get? 
-# #Does it match your expectations?
-# 
-# # Recode
-# # the recode function in the library 'car'
-# table(nhanes$sex)
-# nhanes[c(1:20), ]
-# # convert sex=2 to 0
-# nhanes$male <- recode(nhanes$sex, "2=0; else=nhanes$sex")
-# nhanes[c(1:20), c("sex", "male")]
-# 
-# # Recode 65+ as 1, other as 2
-# length(nhanes$age[nhanes$age>=65 & nhanes$age<=90]) #What do you expect?
-# nhanes$age2 <- recode(nhanes$age, "65:90=1; else=2")
-# nhanes[c(1:20), c("age", "age2")]
-# table(nhanes$age2) #What do you get?
-# 
-# ### Note the function 'recode' in epiDisplay is different than in the car package.
-# ### It is similar to the replace() function
-# ### use package::function to overcome function masking between packages
+#order by sex and then age
+nhanes_ordered <- nhanes_dataset %>%
+  arrange(sex, RIDAGEYR)
 ```
 
 # Ready to do Exercise 3A
+
+
 
 # Check function default settings for handling missing values
 
 ```{r check_default_missing}
 ### How do functions handle missing values?
-cor(nhanes$age, nhanes$bmi)
-summary(nhanes$bmi)
-summ(nhanes$bmi)
-# What options can you use to overcome the default missing data setting?
-cor(nhanes$age, nhanes$bmi, use = "complete")
-mean(nhanes$bmi)
-mean(nhanes$bmi, na.rm = T)
-mean(na.omit(nhanes$bmi))
+
+#calculate a correlation between age and iron concentration
+cor(nhanes_ordered$RIDAGEYR, nhanes_ordered$LBXIRN)
+cor(nhanes_ordered$RIDAGEYR, nhanes_ordered$LBXIRN, use="complete.obs")
+
+#calculate summary statistics on iron
+summary(nhanes_ordered$LBXIRN)
+
+#calculate the mean of iron
+mean(nhanes_ordered$LBXIRN)
+mean(nhanes_ordered$LBXIRN, na.rm = TRUE)
+#note the na.omit - remove all rows that include NAs
+mean(na.omit(nhanes_ordered$LBXIRN))
 ```
 
-# Use the na.omit() function to drop missing observations, make a new dataset
 
-```{r na.omit}
-# nhanes.d <- na.omit(nhanes[, c(
-#   "age", "bpb", "sbp", "dbp", "bmi", "packyrs",
-#   "hematoc", "educ", "smk", "alc", "med_ht", "diag_dm"
-# )])
-# nhanes.e <- na.omit(nhanes)
-# dim(nhanes.d)
-# dim(nhanes.e)
-# 
-# cor(nhanes.d$age, nhanes.d$bmi)
-# cor(nhanes.e$age, nhanes.e$bmi)
+# Exclude some data 
+
+```{r}
+
+# Check the original counts 
+table(nhanes_ordered$RIDAGEYR, useNA = "always")
+
+# Exclude data for participants who are less than 1 years old
+nhanes_age_1_85 <- nhanes_ordered %>%
+  mutate(age = na_if(RIDAGEYR, 0)) %>% #make all ages of 0 missing
+  drop_na(age) #if there is a missing in RIDAGEYR, drop that participant row (will drop participants who were age 0)
+
+# Check new counts
+table(nhanes_age_1_85$age, useNA = "always")
+
+# Why is NA still 0?
 ```
 
-# Use a logical vector and square brackets to index non-missing observations
 
-```{r logical_index}
-# OK <- !is.na(nhanes$age) & !is.na(nhanes$bmi)
-# cor(nhanes$age[OK], nhanes$bmi[OK])
-# 
-# cor(nhanes$age[OK == 1], nhanes$bmi[OK == 1])
-```
 
-# Strategies to make repeated tasks in your coding more efficient
-
-# Use the apply family of functions for more efficient coding
-
-```{r apply_aggregate}
-# apply(nhanes, 2, mean)
-# tapply(nhanes$bmi, age5c, mean)
-# tapply(nhanes$bmi, age5c, summary)
-# 
-# ## similar grouped outputs can be obtained using aggregate()
-# aggregate(nhanes$bmi, by = list(Sex = nhanes$sex, Race = nhanes$race), mean, na.rm = T) # stratified by sex and race
-# aggregate(nhanes$race, by = list(nhanes$sex), table, na.rm = T) # stratified by sex and race
-# 
-# aggregate(nhanes[, c("sbp", "dbp")], by = list(Sex = nhanes$sex, Race = nhanes$race), mean) # for multiple columns at once
-# 
-# codebook(nhanes.a) # returns summary stat by variable characteristics
-# summ(nhanes)
-```
-
-# Try compiling results with a for loop.
+# Try compiling results with a for loop
 
 ```{r for_loop}
-# First prep the output dataset
-out <- data.frame(matrix(nrow = ncol(nhanes), ncol = 3))
+# First prep the output dataset - set up blank columns
+out <- data.frame(matrix(nrow = ncol(nhanes_ordered), ncol = 3))
+
+#set the column names for the dataframe
 colnames(out) <- c("variable", "mean", "sd")
-out[, 1] <- colnames(nhanes)
+
+#pull the column names from nhanes_ordered and set them as the values for the first column
+out[, 1] <- colnames(nhanes_ordered)
+
 # Then initiate the loop
-for (i in 1:ncol(nhanes)) {
-  out[i, 2] <- mean(as.numeric(nhanes[, i]), na.rm = T)
-  out[i, 3] <- sd(as.numeric(nhanes[, i]), na.rm = T)
+for (i in 1:ncol(nhanes_ordered)) {
+  out[i, 2] <- mean(as.numeric(nhanes_ordered[, i]), na.rm = TRUE)
+  out[i, 3] <- sd(as.numeric(nhanes_ordered[, i]), na.rm = TRUE)
 }
 out
+
+# Why do some variables have a mean of NA?
 ```
 
-# Generate descriptive statistics for each group
-
-```{r compareGroups}
-# sapply(nhanes[nhanes$age >= 65, ], mean, na.rm = T) # for a subset age>=65
-# tapply(nhanes$bmi, age5c, mean, na.rm = T) # stratified by age
-# 
-# # Try compiling/exporting results by group with compareGroups
-# createTable(compareGroups(nhanes)) # for all variables
-# bivariate.table<-createTable(compareGroups(sex1 ~ . - strata - seqn, data = nhanes.a)) # for all variables, stratified by sex
-# bivariate.table 
-# # export2word(bivariate.table, file=paste0(directory,"bivariate_table.docx"))
-  
-```
 
 # Date and Time
 
@@ -309,3 +315,14 @@ as.Date(paste(day1, month1, year1), "%d %m %Y")
 ```
 
 # Ready to do Exercise 3B
+
+
+
+# Remember to save your R script!
+
+# To exit R
+
+```{r exit, eval=F}
+# q()
+## if you close R, you will be asked to save your workspace image
+```
