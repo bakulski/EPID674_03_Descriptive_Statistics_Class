@@ -1,7 +1,7 @@
 ---
 title: "EPID674 Epidemiologic Data Analysis using R"
 subtitle: "Descriptive Statistics, Tables, Misc."
-author: "Kelly Bakulski"
+author: "Kelly Bakulski and Lauren Middleton"
 date: "Last compiled on `r format(Sys.Date(), '%B %d, %Y')`"
 output:
   html_document:
