@@ -1,0 +1,159 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+# check your understanding univariate
+
+nhanes_dataset %>%
+  summarise(pir_min = min(INDFMPIR),
+            pir_25_quart = quantile(INDFMPIR, probs = 0.25),
+            pir_mean = mean(INDFMPIR),
+            pir_median = median(INDFMPIR),
+            pir_75_quart = quantile(INDFMPIR, probs = 0.75),
+            pir_iqr = IQR(INDFMPIR),
+            pir_max = max(INDFMPIR))
+
+summary(nhanes_dataset$INDFMPIR)
+
+
+# Do activity with this example
+nhanes_dataset %>%
+  group_by(sex) %>%
+  summarise(age_mean = mean(RIDAGEYR),
+            pir_mean = mean(INDFMPIR, na.rm = TRUE)) %>%
+  ungroup()
+
+```
+### Format for check your understanding exercise 
+
+```{r bivariate_descriptives_numeric_variable}
+# Do activity with this example
+nhanes_dataset %>%
+  group_by(sex) %>%
+  summarise(age_mean = mean(RIDAGEYR),
+            pir_mean = mean(INDFMPIR, na.rm = TRUE)) %>%
+  ungroup()
+```
+
+
+```{r}
+# Tidyverse method
+nhanes_dataset %>% 
+	count(iron_status, cut_groups) %>%
+	mutate(percent = n / sum(n) * 100)
+```
+
+
+
+# Create a publication-formatted table
+# Testing for power point, may need to delete
+```{r}
+nhanes_dataset %>%
+  select(RIDAGEYR,
+         education) %>% #drop SEQN and survey variables so we don't get summary statistics for the identifiers or weights
+  tbl_summary(label = education ~ "Educational Attainment")
+
+nhanes_dataset %>%
+  select(RIDAGEYR,
+         education,
+         sex) %>% #drop SEQN and survey variables so we don't get summary statistics for the identifiers or weights
+  tbl_summary(by = sex,
+    label = education ~ "Educational Attainment") %>%
+  add_p()
+```
+
+
+
+```{r bivariate_descriptive_table}
+
+# Bivariate table by sex using gtsummary - will take about 5 seconds to run
+bivar_nhanes <- nhanes_dataset %>%
+  select(-SEQN,
+         -SDMVSTRA,
+         -SDMVPSU,
+         -RIASEX,
+         -RIDRETH1,
+         -cut_groups,
+         -LBXWBCSI,
+         -LBDLYMNO,
+         -LBDNENO,
+         -URXUAS,
+         -LBXCOT,
+         -LBXBCD,
+         -LBXBPB) %>%
+  tbl_summary(by = sex, #stratify by sex
+              label = list(RIDAGEYR    ~ "Age (years)", #update the variable names
+                           race_eth    ~ "Race/Ethnicity",
+                           INDFMPIR    ~ "Poverty-Income Ratio",
+                           LBXRBCSI    ~ "Red Blood Cell Count (million cells/uL)",
+                           LBXIRN      ~ "Iron (ug/dL)",
+                           iron_status ~ "Iron Status",
+                           nlr         ~ "Neutrophil:Lymphocyte Ratio"),
+              statistic = list(all_continuous() ~ "{mean} ({sd})", #use mean and standard deviation for continuous variables
+                               all_categorical() ~ "{n} ({p}%)"),  #use count and percentage for categorical variables
+              digits = list(all_categorical() ~ c(0, 1), #adds no decimal places to counts and one decimal to percentages
+                            all_continuous() ~ 1), #adds one decimal place to mean and sd values
+              missing_text = "Missing (n)"
+              ) %>%
+  add_p() %>% #compares male vs female, does not include overall in p-value calculation
+  add_overall() %>% #adds column with non-stratified summary statistics
+  modify_header(label ~ "**Variable**") %>% #the asterisks bold the label
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**Sex**") %>%
+  bold_labels()
+
+#View table
+bivar_nhanes
+
+
+# Save the table as a Word document - some formatting such as bold headers will be lost
+bivar_nhanes %>%
+  as_flex_table() %>%
+  save_as_docx(path = here("summary_stats_table.docx")) #Export the table to Word using flextable package
+```
+
+
+
+
+## Testing for powerpoint, likely delete
+```{r}
+
+fruit_farms <- c("Tantre Farm",
+                   "Kapnick Orchards",
+                   "Wasem Fruit Farm",
+                   "Erie Orchard and Cider Mill")
+fruit_farms
+
+short_names <- c("Tantre",
+                 "Kapnick",
+                 "Wasem",
+                 "Erie")
+
+for (i in 1:length(fruit_farms)){
+  print(paste(fruit_farms[i], "has", nchar(fruit_farms[i]), "characters in the name."))
+}
+paste("The farm", fruit_farms[2], "has", nchar(fruit_farms[2]), "characters in the name.")
+nchar(fruit_farms[2])
+
+x <- 1:10
+for (i in 1:length(x)) {
+  print(i^2)
+}
+
+
+for (i in 1:10) {
+  print(i^2)
+}
+
+nhanes_dataset %>%
+	summarise(Minimum = min(RIDAGEYR),
+						Mean = mean(RIDAGEYR),
+						Maximum = max(RIDAGEYR))
+
+```
