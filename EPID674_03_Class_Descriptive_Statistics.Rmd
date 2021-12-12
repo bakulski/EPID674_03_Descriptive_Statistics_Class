@@ -1,6 +1,6 @@
 ---
 title: "EPID674 Epidemiologic Data Analysis using R"
-subtitle: "Descriptive Statistics, Tables, Misc."
+subtitle: "Descriptive Statistics, Tables"
 author: "Kelly Bakulski, Lauren Middleton"
 date: "Last compiled on `r format(Sys.Date(), '%B %d, %Y')`"
 output:
@@ -195,7 +195,7 @@ nhanes_dataset %>%
 
 # Check your understanding!
 
-Calculate the bivariate descriptive statistics between the iron status and age group variables: iron_status and cut_groups
+Calculate the bivariate descriptive statistics between the iron status and age group variables: iron_status and age_groups
 * Start by creating a new r code chunk
 * Identify the types of variables to determine the descriptive statistics to calculate
 * Try calculating them! 

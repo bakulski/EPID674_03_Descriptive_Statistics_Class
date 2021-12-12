@@ -243,7 +243,7 @@ div.tocify {
 <h1 class="title toc-ignore">EPID674 Epidemiologic Data Analysis using R</h1>
 <h3 class="subtitle">Descriptive Statistics, Tables, Misc.</h3>
 <h4 class="author">Kelly Bakulski, Lauren Middleton</h4>
-<h4 class="date">Last compiled on December 09, 2021</h4>
+<h4 class="date">Last compiled on December 12, 2021</h4>
 
 </div>
 
@@ -283,8 +283,9 @@ library(tidyverse)</code></pre>
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(here)</code></pre>
 <pre><code>## here() starts at /cloud/project</code></pre>
-<pre class="r"><code>library(gtsummary)
-library(flextable)</code></pre>
+<pre class="r"><code>library(gtsummary)</code></pre>
+<pre><code>## #BlackLivesMatter</code></pre>
+<pre class="r"><code>library(flextable)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;flextable&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:gtsummary&#39;:
@@ -390,7 +391,7 @@ nhanes_dataset %&gt;%
 <pre class="r"><code># Univariate table using gtsummary package
 colnames(nhanes_dataset)</code></pre>
 <pre><code>##  [1] &quot;SEQN&quot;            &quot;RIASEX&quot;          &quot;sex&quot;             &quot;RIDAGEYR&quot;       
-##  [5] &quot;cut_groups&quot;      &quot;RIDRETH1&quot;        &quot;race_eth&quot;        &quot;INDFMPIR&quot;       
+##  [5] &quot;age_groups&quot;      &quot;RIDRETH1&quot;        &quot;race_eth&quot;        &quot;INDFMPIR&quot;       
 ##  [9] &quot;DMDEDUC3&quot;        &quot;DMDEDUC2&quot;        &quot;education_youth&quot; &quot;education_adult&quot;
 ## [13] &quot;education&quot;       &quot;SDMVSTRA&quot;        &quot;SDMVPSU&quot;         &quot;LBXRBCSI&quot;       
 ## [17] &quot;LBXWBCSI&quot;        &quot;LBDLYMNO&quot;        &quot;LBDNENO&quot;         &quot;nlr&quot;            
@@ -415,12 +416,12 @@ colnames(nhanes_dataset)</code></pre>
   tbl_summary(label = list(education ~ &quot;Overall Educational Attainment&quot;, 
                            race_eth ~ &quot;Race/ethnicity&quot;),
              statistic = all_continuous() ~ &quot;{mean} ({sd})&quot;)</code></pre>
-<div id="ecjetnrxce" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="awiadqbarn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ecjetnrxce .gt_table {
+#awiadqbarn .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -445,7 +446,7 @@ colnames(nhanes_dataset)</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#ecjetnrxce .gt_heading {
+#awiadqbarn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -457,7 +458,7 @@ colnames(nhanes_dataset)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ecjetnrxce .gt_title {
+#awiadqbarn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -467,7 +468,7 @@ colnames(nhanes_dataset)</code></pre>
   border-bottom-width: 0;
 }
 
-#ecjetnrxce .gt_subtitle {
+#awiadqbarn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -477,13 +478,13 @@ colnames(nhanes_dataset)</code></pre>
   border-top-width: 0;
 }
 
-#ecjetnrxce .gt_bottom_border {
+#awiadqbarn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ecjetnrxce .gt_col_headings {
+#awiadqbarn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -498,7 +499,7 @@ colnames(nhanes_dataset)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ecjetnrxce .gt_col_heading {
+#awiadqbarn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -518,7 +519,7 @@ colnames(nhanes_dataset)</code></pre>
   overflow-x: hidden;
 }
 
-#ecjetnrxce .gt_column_spanner_outer {
+#awiadqbarn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -530,15 +531,15 @@ colnames(nhanes_dataset)</code></pre>
   padding-right: 4px;
 }
 
-#ecjetnrxce .gt_column_spanner_outer:first-child {
+#awiadqbarn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ecjetnrxce .gt_column_spanner_outer:last-child {
+#awiadqbarn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ecjetnrxce .gt_column_spanner {
+#awiadqbarn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -550,7 +551,7 @@ colnames(nhanes_dataset)</code></pre>
   width: 100%;
 }
 
-#ecjetnrxce .gt_group_heading {
+#awiadqbarn .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -572,7 +573,7 @@ colnames(nhanes_dataset)</code></pre>
   vertical-align: middle;
 }
 
-#ecjetnrxce .gt_empty_group_heading {
+#awiadqbarn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -587,15 +588,15 @@ colnames(nhanes_dataset)</code></pre>
   vertical-align: middle;
 }
 
-#ecjetnrxce .gt_from_md > :first-child {
+#awiadqbarn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ecjetnrxce .gt_from_md > :last-child {
+#awiadqbarn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ecjetnrxce .gt_row {
+#awiadqbarn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -614,7 +615,7 @@ colnames(nhanes_dataset)</code></pre>
   overflow-x: hidden;
 }
 
-#ecjetnrxce .gt_stub {
+#awiadqbarn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -626,7 +627,7 @@ colnames(nhanes_dataset)</code></pre>
   padding-left: 12px;
 }
 
-#ecjetnrxce .gt_summary_row {
+#awiadqbarn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -636,7 +637,7 @@ colnames(nhanes_dataset)</code></pre>
   padding-right: 5px;
 }
 
-#ecjetnrxce .gt_first_summary_row {
+#awiadqbarn .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -646,7 +647,7 @@ colnames(nhanes_dataset)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#ecjetnrxce .gt_grand_summary_row {
+#awiadqbarn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -656,7 +657,7 @@ colnames(nhanes_dataset)</code></pre>
   padding-right: 5px;
 }
 
-#ecjetnrxce .gt_first_grand_summary_row {
+#awiadqbarn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -666,11 +667,11 @@ colnames(nhanes_dataset)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#ecjetnrxce .gt_striped {
+#awiadqbarn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ecjetnrxce .gt_table_body {
+#awiadqbarn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -679,7 +680,7 @@ colnames(nhanes_dataset)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ecjetnrxce .gt_footnotes {
+#awiadqbarn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -693,13 +694,13 @@ colnames(nhanes_dataset)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ecjetnrxce .gt_footnote {
+#awiadqbarn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#ecjetnrxce .gt_sourcenotes {
+#awiadqbarn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -713,41 +714,41 @@ colnames(nhanes_dataset)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ecjetnrxce .gt_sourcenote {
+#awiadqbarn .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#ecjetnrxce .gt_left {
+#awiadqbarn .gt_left {
   text-align: left;
 }
 
-#ecjetnrxce .gt_center {
+#awiadqbarn .gt_center {
   text-align: center;
 }
 
-#ecjetnrxce .gt_right {
+#awiadqbarn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ecjetnrxce .gt_font_normal {
+#awiadqbarn .gt_font_normal {
   font-weight: normal;
 }
 
-#ecjetnrxce .gt_font_bold {
+#awiadqbarn .gt_font_bold {
   font-weight: bold;
 }
 
-#ecjetnrxce .gt_font_italic {
+#awiadqbarn .gt_font_italic {
   font-style: italic;
 }
 
-#ecjetnrxce .gt_super {
+#awiadqbarn .gt_super {
   font-size: 65%;
 }
 
-#ecjetnrxce .gt_footnote_marks {
+#awiadqbarn .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -870,7 +871,7 @@ colnames(nhanes_dataset)</code></pre>
 <h1>Ordering data</h1>
 <pre class="r"><code># Look at the current order of rows
 head(nhanes_dataset)</code></pre>
-<pre><code>##    SEQN RIASEX    sex RIDAGEYR cut_groups RIDRETH1           race_eth INDFMPIR
+<pre><code>##    SEQN RIASEX    sex RIDAGEYR age_groups RIDRETH1           race_eth INDFMPIR
 ## 1 93703      2 Female        2     [0,16]        5         Other Race     5.00
 ## 2 93704      1   Male        2     [0,16]        3 Non-Hispanic White     5.00
 ## 3 93705      2 Female       66    (64,80]        4 Non-Hispanic Black     0.82
@@ -902,7 +903,7 @@ head(nhanes_dataset)</code></pre>
 nhanes_dataset %&gt;%
   arrange(RIDAGEYR, sex) %&gt;%
   head()</code></pre>
-<pre><code>##    SEQN RIASEX  sex RIDAGEYR cut_groups RIDRETH1           race_eth INDFMPIR
+<pre><code>##    SEQN RIASEX  sex RIDAGEYR age_groups RIDRETH1           race_eth INDFMPIR
 ## 1 93748      1 Male        0     [0,16]        1   Mexican American     2.79
 ## 2 93786      1 Male        0     [0,16]        4 Non-Hispanic Black     0.52
 ## 3 93854      1 Male        0     [0,16]        3 Non-Hispanic White     3.67
@@ -934,7 +935,7 @@ nhanes_dataset %&gt;%
 nhanes_dataset %&gt;%
   arrange(desc(RIDAGEYR, sex)) %&gt;%
   head()</code></pre>
-<pre><code>##    SEQN RIASEX    sex RIDAGEYR cut_groups RIDRETH1           race_eth INDFMPIR
+<pre><code>##    SEQN RIASEX    sex RIDAGEYR age_groups RIDRETH1           race_eth INDFMPIR
 ## 1 93768      1   Male       80    (64,80]        3 Non-Hispanic White     3.04
 ## 2 93785      2 Female       80    (64,80]        3 Non-Hispanic White     5.00
 ## 3 93800      2 Female       80    (64,80]        3 Non-Hispanic White     2.80
@@ -1036,7 +1037,7 @@ nhanes_dataset %&gt;%
 </div>
 <div id="check-your-understanding-1" class="section level1">
 <h1>Check your understanding!</h1>
-<p>Calculate the bivariate descriptive statistics between the iron status and age group variables: iron_status and cut_groups * Start by creating a new r code chunk * Identify the types of variables to determine the descriptive statistics to calculate * Try calculating them!</p>
+<p>Calculate the bivariate descriptive statistics between the iron status and age group variables: iron_status and age_groups * Start by creating a new r code chunk * Identify the types of variables to determine the descriptive statistics to calculate * Try calculating them!</p>
 <div id="bivariate-descriptive-statistics-publication-ready-table" class="section level2">
 <h2>Bivariate descriptive statistics, publication ready table</h2>
 <pre class="r"><code># Bivariate table by sex using gtsummary - will take about 5 seconds to run
@@ -1079,12 +1080,12 @@ bivar_nhanes &lt;- nhanes_dataset %&gt;%
 
 #View table
 bivar_nhanes</code></pre>
-<div id="lowefnqynb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="vcmxrmjqko" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#lowefnqynb .gt_table {
+#vcmxrmjqko .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1109,7 +1110,7 @@ bivar_nhanes</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#lowefnqynb .gt_heading {
+#vcmxrmjqko .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1121,7 +1122,7 @@ bivar_nhanes</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lowefnqynb .gt_title {
+#vcmxrmjqko .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1131,7 +1132,7 @@ bivar_nhanes</code></pre>
   border-bottom-width: 0;
 }
 
-#lowefnqynb .gt_subtitle {
+#vcmxrmjqko .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1141,13 +1142,13 @@ bivar_nhanes</code></pre>
   border-top-width: 0;
 }
 
-#lowefnqynb .gt_bottom_border {
+#vcmxrmjqko .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lowefnqynb .gt_col_headings {
+#vcmxrmjqko .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1162,7 +1163,7 @@ bivar_nhanes</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lowefnqynb .gt_col_heading {
+#vcmxrmjqko .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1182,7 +1183,7 @@ bivar_nhanes</code></pre>
   overflow-x: hidden;
 }
 
-#lowefnqynb .gt_column_spanner_outer {
+#vcmxrmjqko .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1194,15 +1195,15 @@ bivar_nhanes</code></pre>
   padding-right: 4px;
 }
 
-#lowefnqynb .gt_column_spanner_outer:first-child {
+#vcmxrmjqko .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lowefnqynb .gt_column_spanner_outer:last-child {
+#vcmxrmjqko .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lowefnqynb .gt_column_spanner {
+#vcmxrmjqko .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1214,7 +1215,7 @@ bivar_nhanes</code></pre>
   width: 100%;
 }
 
-#lowefnqynb .gt_group_heading {
+#vcmxrmjqko .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1236,7 +1237,7 @@ bivar_nhanes</code></pre>
   vertical-align: middle;
 }
 
-#lowefnqynb .gt_empty_group_heading {
+#vcmxrmjqko .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1251,15 +1252,15 @@ bivar_nhanes</code></pre>
   vertical-align: middle;
 }
 
-#lowefnqynb .gt_from_md > :first-child {
+#vcmxrmjqko .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lowefnqynb .gt_from_md > :last-child {
+#vcmxrmjqko .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lowefnqynb .gt_row {
+#vcmxrmjqko .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1278,7 +1279,7 @@ bivar_nhanes</code></pre>
   overflow-x: hidden;
 }
 
-#lowefnqynb .gt_stub {
+#vcmxrmjqko .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1290,7 +1291,7 @@ bivar_nhanes</code></pre>
   padding-left: 12px;
 }
 
-#lowefnqynb .gt_summary_row {
+#vcmxrmjqko .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1300,7 +1301,7 @@ bivar_nhanes</code></pre>
   padding-right: 5px;
 }
 
-#lowefnqynb .gt_first_summary_row {
+#vcmxrmjqko .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1310,7 +1311,7 @@ bivar_nhanes</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#lowefnqynb .gt_grand_summary_row {
+#vcmxrmjqko .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1320,7 +1321,7 @@ bivar_nhanes</code></pre>
   padding-right: 5px;
 }
 
-#lowefnqynb .gt_first_grand_summary_row {
+#vcmxrmjqko .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1330,11 +1331,11 @@ bivar_nhanes</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#lowefnqynb .gt_striped {
+#vcmxrmjqko .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lowefnqynb .gt_table_body {
+#vcmxrmjqko .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1343,7 +1344,7 @@ bivar_nhanes</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#lowefnqynb .gt_footnotes {
+#vcmxrmjqko .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1357,13 +1358,13 @@ bivar_nhanes</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lowefnqynb .gt_footnote {
+#vcmxrmjqko .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#lowefnqynb .gt_sourcenotes {
+#vcmxrmjqko .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1377,41 +1378,41 @@ bivar_nhanes</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lowefnqynb .gt_sourcenote {
+#vcmxrmjqko .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#lowefnqynb .gt_left {
+#vcmxrmjqko .gt_left {
   text-align: left;
 }
 
-#lowefnqynb .gt_center {
+#vcmxrmjqko .gt_center {
   text-align: center;
 }
 
-#lowefnqynb .gt_right {
+#vcmxrmjqko .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lowefnqynb .gt_font_normal {
+#vcmxrmjqko .gt_font_normal {
   font-weight: normal;
 }
 
-#lowefnqynb .gt_font_bold {
+#vcmxrmjqko .gt_font_bold {
   font-weight: bold;
 }
 
-#lowefnqynb .gt_font_italic {
+#vcmxrmjqko .gt_font_italic {
   font-style: italic;
 }
 
-#lowefnqynb .gt_super {
+#vcmxrmjqko .gt_super {
   font-size: 65%;
 }
 
-#lowefnqynb .gt_footnote_marks {
+#vcmxrmjqko .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -1678,7 +1679,7 @@ nhanes_dataset %&gt;%
 <pre><code>## [1]  0 26</code></pre>
 <pre class="r"><code># What variables have the most missing data?
 summary(nhanes_dataset)</code></pre>
-<pre><code>##       SEQN            RIASEX          sex          RIDAGEYR       cut_groups  
+<pre><code>##       SEQN            RIASEX          sex          RIDAGEYR       age_groups  
 ##  Min.   : 93703   Min.   :1.000   Male  :4557   Min.   : 0.00   [0,16] :3250  
 ##  1st Qu.: 96016   1st Qu.:1.000   Female:4697   1st Qu.:11.00   (16,32]:1519  
 ##  Median : 98330   Median :2.000                 Median :31.00   (32,48]:1349  
@@ -1835,11 +1836,11 @@ format(birth_days_date, &quot;%a-%d%b%y&quot;)</code></pre>
 <h1>Calculate age as of today’s date</h1>
 <pre class="r"><code>date_today &lt;- Sys.Date() # Sys.time or Sys.Date: Current time/Date
 date_today</code></pre>
-<pre><code>## [1] &quot;2021-12-09&quot;</code></pre>
+<pre><code>## [1] &quot;2021-12-12&quot;</code></pre>
 <pre class="r"><code>current_age &lt;- (date_today - birth_days_date) / 365.25
 current_age</code></pre>
 <pre><code>## Time differences in days
-## [1] 51.93703 41.40999 21.32238 62.10267</code></pre>
+## [1] 51.94524 41.41821 21.33060 62.11088</code></pre>
 <pre class="r"><code>current_age &lt;- trunc(as.numeric(current_age))
 
 
