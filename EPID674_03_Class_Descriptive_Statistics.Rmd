@@ -13,7 +13,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE) # This is how you set options for all chunks of code
 ```
 
-## Chapter 3, Descriptive Statistics, Tables, Misc.
+## Descriptive Statistics, Tables, Misc.
 
 # Install new packages
 
