@@ -45,7 +45,7 @@ library(flextable)
 
 sessionInfo() # record the versions of packages used in the current session
 
-# Load saved NHANES dataset from Week 2
+# Load saved NHANES dataset from session 02 on Data Management
 load(here(("nhanes_dataset.rda")))
 ```
 
