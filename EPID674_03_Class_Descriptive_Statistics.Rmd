@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE) # This is how you set options for all chunks 
 
 # Install new packages
 
-```{r install packages, eval=FALSE}
+```{r install_packages, eval=FALSE}
 
 # Install packages. Do this only once.
 # We have this completed for you on Cloud, so you do not need to run this.
@@ -32,7 +32,7 @@ install.packages("flextable")
 
 # Set up: Query the current R environment, load relevant packages, load dataset created in Week 2
 
-```{r packages}
+```{r load_packages}
 
 search() # list the packages, environments, or data frames
 ls() # list the objects
@@ -46,7 +46,7 @@ library(flextable)
 sessionInfo() # record the versions of packages used in the current session
 
 # Load saved NHANES dataset from session 02 on Data Management
-load(here(("nhanes_dataset.rda")))
+load(here(("nhanes_class_dataset.rda")))
 ```
 
 
@@ -54,11 +54,11 @@ load(here(("nhanes_dataset.rda")))
 
 ```{r univariate_descriptives_numeric_variable}
 # Base R method - quick, good for one variable at a time
-summary(nhanes_dataset$RIDAGEYR)
-sd(nhanes_dataset$RIDAGEYR)
+summary(nhanes$RIDAGEYR)
+sd(nhanes$RIDAGEYR)
 
 # Tidyverse method - more code, but can be used to get summary statistics on multiple variables
-nhanes_dataset %>%
+nhanes %>%
   summarise(age_min = min(RIDAGEYR),
             age_25_quart = quantile(RIDAGEYR, probs = 0.25),
             age_mean = mean(RIDAGEYR),
@@ -83,10 +83,10 @@ Specifically, calculate the minimum, 25th percentile, median, mean, 75th percent
 ```{r categorical_variable_descriptives}
 
 # Base R method- quick, good for one variable at a time
-table(nhanes_dataset$race_eth)
+table(nhanes$race_eth)
 
 # Tidyverse method - more code, but can be used to get summary statistics on combinations of multiple variables
-nhanes_dataset %>% 
+nhanes %>% 
 	count(race_eth) %>%
 	mutate(percent = n / sum(n) * 100)
 
@@ -96,8 +96,8 @@ nhanes_dataset %>%
 ```{r reproducible_univariate_tables}
 
 # Univariate table using gtsummary package
-colnames(nhanes_dataset)
-nhanes_dataset %>%
+colnames(nhanes)
+nhanes %>%
   select(RIDAGEYR, 
          sex, 
          race_eth,
@@ -127,33 +127,33 @@ nhanes_dataset %>%
 ```{r order_rows}
 
 # Look at the current order of rows
-head(nhanes_dataset)
+head(nhanes)
 
 # Order by age and then sex
-nhanes_dataset %>%
+nhanes %>%
   arrange(RIDAGEYR, sex) %>%
   head()
 
 # Descending order by age and then sex
-nhanes_dataset %>%
+nhanes %>%
   arrange(desc(RIDAGEYR, sex)) %>%
   head()
 
 ```
 
-# Filter to subset the dataset
+# Filter rows of the dataset
 
 ```{r filter_data}
 
 # Practice filtering: Keep only the female participants
-table(nhanes_dataset$sex) # What do you expect?
-nhanes_subset <- nhanes_dataset %>%
+table(nhanes$sex) # What do you expect?
+nhanes_subset <- nhanes %>%
   filter(sex == "Female")
 dim(nhanes_subset) # What do you get?
 
 # Keep only the participants who are iron deficient and older than 60 years using filter()
-table(nhanes_dataset$iron_status, nhanes_dataset$RIDAGEYR >= 60) # What do you expect?
-nhanes_subset <- nhanes_dataset %>%
+table(nhanes$iron_status, nhanes$RIDAGEYR >= 60) # What do you expect?
+nhanes_subset <- nhanes %>%
   filter(iron_status == "Deficient" & RIDAGEYR >= 60)
 dim(nhanes_subset) # What do you get?
 
@@ -166,7 +166,7 @@ dim(nhanes_subset) # What do you get?
 ```{r bivariate_descriptives_numeric_variable}
 # Calculating statistics by groups - tidyverse
 # Note: good practice to add ungroup() after using it to avoid the dataset staying grouped
-nhanes_dataset %>%
+nhanes %>%
   group_by(sex) %>%
   summarise(age_min = min(RIDAGEYR),
             age_25_quart = quantile(RIDAGEYR, probs = 0.25),
@@ -184,10 +184,10 @@ nhanes_dataset %>%
 ```{r bivariate_descriptives_categorical_variable}
 
 # Base R method
-table(nhanes_dataset$race_eth, nhanes_dataset$sex)
+table(nhanes$race_eth, nhanes$sex)
 
 # Tidyverse method
-nhanes_dataset %>% 
+nhanes %>% 
 	count(race_eth, sex) %>%
 	mutate(percent = n / sum(n) * 100)
 
@@ -207,7 +207,7 @@ Calculate the bivariate descriptive statistics between the iron status and age g
 ```{r bivariate_descriptive_table}
 
 # Bivariate table by sex using gtsummary - will take about 5 seconds to run
-bivar_nhanes <- nhanes_dataset %>%
+bivar_nhanes <- nhanes %>%
   select(RIDAGEYR, 
          sex, 
          race_eth,
@@ -261,12 +261,12 @@ bivar_nhanes %>%
 ```{r missing_data}
 
 # How many participants have complete data on all variables?
-nhanes_dataset %>%
-  na.omit() %>% #exclude any participants with missing data
+nhanes %>%
+  drop_na() %>% #exclude any participants with missing data
   dim() #what are the dimensions after excluding missing data?
 
 # What variables have the most missing data?
-summary(nhanes_dataset)
+summary(nhanes)
 
 ```
 
@@ -275,17 +275,17 @@ summary(nhanes_dataset)
 ### How do functions handle missing values?
 
 #calculate summary statistics on iron
-summary(nhanes_dataset$LBXIRN)
+summary(nhanes$LBXIRN)
 
 #calculate the mean of iron
-mean(nhanes_dataset$LBXIRN)
-mean(nhanes_dataset$LBXIRN, na.rm = TRUE)
+mean(nhanes$LBXIRN)
+mean(nhanes$LBXIRN, na.rm = TRUE)
 #note the na.omit - remove all rows that include NAs
-mean(na.omit(nhanes_dataset$LBXIRN))
+mean(na.omit(nhanes$LBXIRN))
 
 #calculate a correlation between age and iron concentration
-cor(nhanes_dataset$RIDAGEYR, nhanes_dataset$LBXIRN)
-cor(nhanes_dataset$RIDAGEYR, nhanes_dataset$LBXIRN, use="complete.obs")
+cor(nhanes$RIDAGEYR, nhanes$LBXIRN)
+cor(nhanes$RIDAGEYR, nhanes$LBXIRN, use="complete.obs")
 
 ```
 
@@ -295,7 +295,7 @@ cor(nhanes_dataset$RIDAGEYR, nhanes_dataset$LBXIRN, use="complete.obs")
 ```{r for_loop}
 
 # Filter to the numeric variables, we'll be calculating numeric descriptive statistics
-nhanes_numeric <- nhanes_dataset %>%
+nhanes_numeric <- nhanes %>%
     select_if(is.numeric)
 
 # First prep the output dataset - set up blank columns
@@ -304,7 +304,7 @@ out <- data.frame(matrix(nrow = ncol(nhanes_numeric), ncol = 3))
 # Set the column names for the dataframe
 colnames(out) <- c("variable", "mean", "sd")
 
-# Pull the column names from nhanes_dataset and set them as the values for the first column
+# Pull the column names from nhanes and set them as the values for the first column
 out[, 1] <- colnames(nhanes_numeric)
 
 # Then initiate the loop

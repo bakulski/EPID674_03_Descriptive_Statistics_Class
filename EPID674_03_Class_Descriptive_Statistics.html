@@ -241,15 +241,15 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">EPID674 Epidemiologic Data Analysis using R</h1>
-<h3 class="subtitle">Descriptive Statistics, Tables, Misc.</h3>
+<h3 class="subtitle">Descriptive Statistics, Tables</h3>
 <h4 class="author">Kelly Bakulski, Lauren Middleton</h4>
-<h4 class="date">Last compiled on December 12, 2021</h4>
+<h4 class="date">Last compiled on January 16, 2022</h4>
 
 </div>
 
 
-<div id="chapter-3-descriptive-statistics-tables-misc." class="section level2">
-<h2>Chapter 3, Descriptive Statistics, Tables, Misc.</h2>
+<div id="descriptive-statistics-tables-misc." class="section level2">
+<h2>Descriptive Statistics, Tables, Misc.</h2>
 </div>
 <div id="install-new-packages" class="section level1">
 <h1>Install new packages</h1>
@@ -275,17 +275,16 @@ install.packages(&quot;flextable&quot;)
 library(tidyverse)</code></pre>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-## ✓ tibble  3.1.5     ✓ dplyr   1.0.7
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.7
 ## ✓ tidyr   1.1.4     ✓ stringr 1.4.0
-## ✓ readr   2.0.2     ✓ forcats 0.5.1</code></pre>
+## ✓ readr   2.1.1     ✓ forcats 0.5.1</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(here)</code></pre>
 <pre><code>## here() starts at /cloud/project</code></pre>
-<pre class="r"><code>library(gtsummary)</code></pre>
-<pre><code>## #BlackLivesMatter</code></pre>
-<pre class="r"><code>library(flextable)</code></pre>
+<pre class="r"><code>library(gtsummary)
+library(flextable)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;flextable&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:gtsummary&#39;:
@@ -313,45 +312,45 @@ library(tidyverse)</code></pre>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] flextable_0.6.9 gtsummary_1.5.0 here_1.0.1      forcats_0.5.1  
-##  [5] stringr_1.4.0   dplyr_1.0.7     purrr_0.3.4     readr_2.0.2    
-##  [9] tidyr_1.1.4     tibble_3.1.5    ggplot2_3.3.5   tidyverse_1.3.1
+##  [1] flextable_0.6.10 gtsummary_1.5.0  here_1.0.1       forcats_0.5.1   
+##  [5] stringr_1.4.0    dplyr_1.0.7      purrr_0.3.4      readr_2.1.1     
+##  [9] tidyr_1.1.4      tibble_3.1.6     ggplot2_3.3.5    tidyverse_1.3.1 
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_1.0.7          lubridate_1.8.0     assertthat_0.2.1   
-##  [4] rprojroot_2.0.2     digest_0.6.28       utf8_1.2.2         
-##  [7] R6_2.5.1            cellranger_1.1.0    backports_1.3.0    
+##  [4] rprojroot_2.0.2     digest_0.6.29       utf8_1.2.2         
+##  [7] R6_2.5.1            cellranger_1.1.0    backports_1.4.1    
 ## [10] reprex_2.0.1        evaluate_0.14       httr_1.4.2         
 ## [13] pillar_1.6.4        gdtools_0.2.3       rlang_0.4.12       
 ## [16] uuid_1.0-3          readxl_1.3.1        rstudioapi_0.13    
 ## [19] data.table_1.14.2   jquerylib_0.1.4     rmarkdown_2.11     
 ## [22] munsell_0.5.0       broom_0.7.10        compiler_4.1.2     
-## [25] modelr_0.1.8        xfun_0.27           systemfonts_1.0.3  
+## [25] modelr_0.1.8        xfun_0.29           systemfonts_1.0.3  
 ## [28] base64enc_0.1-3     pkgconfig_2.0.3     htmltools_0.5.2    
 ## [31] tidyselect_1.1.1    fansi_0.5.0         crayon_1.4.2       
-## [34] tzdb_0.2.0          dbplyr_2.1.1        withr_2.4.2        
+## [34] tzdb_0.2.0          dbplyr_2.1.1        withr_2.4.3        
 ## [37] grid_4.1.2          jsonlite_1.7.2      gtable_0.3.0       
-## [40] lifecycle_1.0.1     DBI_1.1.1           magrittr_2.0.1     
+## [40] lifecycle_1.0.1     DBI_1.1.2           magrittr_2.0.1     
 ## [43] scales_1.1.1        zip_2.2.0           cli_3.1.0          
-## [46] stringi_1.7.5       broom.helpers_1.4.0 fs_1.5.0           
-## [49] xml2_1.3.2          ellipsis_0.3.2      generics_0.1.1     
-## [52] vctrs_0.3.8         tools_4.1.2         glue_1.4.2         
-## [55] officer_0.4.0       hms_1.1.1           fastmap_1.1.0      
+## [46] stringi_1.7.6       broom.helpers_1.5.0 fs_1.5.2           
+## [49] xml2_1.3.3          ellipsis_0.3.2      generics_0.1.1     
+## [52] vctrs_0.3.8         tools_4.1.2         glue_1.6.0         
+## [55] officer_0.4.1       hms_1.1.1           fastmap_1.1.0      
 ## [58] yaml_2.2.1          colorspace_2.0-2    gt_0.3.1           
-## [61] rvest_1.0.2         knitr_1.36          haven_2.4.3</code></pre>
-<pre class="r"><code># Load saved NHANES dataset from Week 2
-load(here((&quot;nhanes_dataset.rda&quot;)))</code></pre>
+## [61] rvest_1.0.2         knitr_1.37          haven_2.4.3</code></pre>
+<pre class="r"><code># Load saved NHANES dataset from session 02 on Data Management
+load(here((&quot;nhanes_class_dataset.rda&quot;)))</code></pre>
 </div>
 <div id="data-description-functions-numeric-variables" class="section level1">
 <h1>Data description functions, numeric variables</h1>
 <pre class="r"><code># Base R method - quick, good for one variable at a time
-summary(nhanes_dataset$RIDAGEYR)</code></pre>
+summary(nhanes$RIDAGEYR)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    0.00   11.00   31.00   34.33   58.00   80.00</code></pre>
-<pre class="r"><code>sd(nhanes_dataset$RIDAGEYR)</code></pre>
+<pre class="r"><code>sd(nhanes$RIDAGEYR)</code></pre>
 <pre><code>## [1] 25.50028</code></pre>
 <pre class="r"><code># Tidyverse method - more code, but can be used to get summary statistics on multiple variables
-nhanes_dataset %&gt;%
+nhanes %&gt;%
   summarise(age_min = min(RIDAGEYR),
             age_25_quart = quantile(RIDAGEYR, probs = 0.25),
             age_mean = mean(RIDAGEYR),
@@ -369,14 +368,14 @@ nhanes_dataset %&gt;%
 <div id="calculate-descriptive-statistics-on-a-categorical-variable" class="section level1">
 <h1>Calculate descriptive statistics on a categorical variable</h1>
 <pre class="r"><code># Base R method- quick, good for one variable at a time
-table(nhanes_dataset$race_eth)</code></pre>
+table(nhanes$race_eth)</code></pre>
 <pre><code>## 
 ## Non-Hispanic White   Mexican American Non-Hispanic Black     Other Hispanic 
 ##               3150               1367               2115                820 
 ##         Other Race 
 ##               1802</code></pre>
 <pre class="r"><code># Tidyverse method - more code, but can be used to get summary statistics on combinations of multiple variables
-nhanes_dataset %&gt;% 
+nhanes %&gt;% 
     count(race_eth) %&gt;%
     mutate(percent = n / sum(n) * 100)</code></pre>
 <pre><code>##             race_eth    n   percent
@@ -389,15 +388,15 @@ nhanes_dataset %&gt;%
 <div id="reproducible-publication-quality-univariate-tables" class="section level1">
 <h1>Reproducible, publication quality univariate tables</h1>
 <pre class="r"><code># Univariate table using gtsummary package
-colnames(nhanes_dataset)</code></pre>
+colnames(nhanes)</code></pre>
 <pre><code>##  [1] &quot;SEQN&quot;            &quot;RIASEX&quot;          &quot;sex&quot;             &quot;RIDAGEYR&quot;       
 ##  [5] &quot;age_groups&quot;      &quot;RIDRETH1&quot;        &quot;race_eth&quot;        &quot;INDFMPIR&quot;       
 ##  [9] &quot;DMDEDUC3&quot;        &quot;DMDEDUC2&quot;        &quot;education_youth&quot; &quot;education_adult&quot;
 ## [13] &quot;education&quot;       &quot;SDMVSTRA&quot;        &quot;SDMVPSU&quot;         &quot;LBXRBCSI&quot;       
 ## [17] &quot;LBXWBCSI&quot;        &quot;LBDLYMNO&quot;        &quot;LBDNENO&quot;         &quot;nlr&quot;            
 ## [21] &quot;LBXIRN&quot;          &quot;iron_status&quot;     &quot;URXUAS&quot;          &quot;LBXBCD&quot;         
-## [25] &quot;LBXBPB&quot;          &quot;LBXCOT&quot;</code></pre>
-<pre class="r"><code>nhanes_dataset %&gt;%
+## [25] &quot;LBXBPB&quot;          &quot;LBXCOT&quot;          &quot;cut_groups&quot;</code></pre>
+<pre class="r"><code>nhanes %&gt;%
   select(RIDAGEYR, 
          sex, 
          race_eth,
@@ -416,12 +415,12 @@ colnames(nhanes_dataset)</code></pre>
   tbl_summary(label = list(education ~ &quot;Overall Educational Attainment&quot;, 
                            race_eth ~ &quot;Race/ethnicity&quot;),
              statistic = all_continuous() ~ &quot;{mean} ({sd})&quot;)</code></pre>
-<div id="awiadqbarn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="vjvaitteyn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#awiadqbarn .gt_table {
+#vjvaitteyn .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -446,7 +445,7 @@ colnames(nhanes_dataset)</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#awiadqbarn .gt_heading {
+#vjvaitteyn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -458,7 +457,7 @@ colnames(nhanes_dataset)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#awiadqbarn .gt_title {
+#vjvaitteyn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -468,7 +467,7 @@ colnames(nhanes_dataset)</code></pre>
   border-bottom-width: 0;
 }
 
-#awiadqbarn .gt_subtitle {
+#vjvaitteyn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -478,13 +477,13 @@ colnames(nhanes_dataset)</code></pre>
   border-top-width: 0;
 }
 
-#awiadqbarn .gt_bottom_border {
+#vjvaitteyn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#awiadqbarn .gt_col_headings {
+#vjvaitteyn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -499,7 +498,7 @@ colnames(nhanes_dataset)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#awiadqbarn .gt_col_heading {
+#vjvaitteyn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -519,7 +518,7 @@ colnames(nhanes_dataset)</code></pre>
   overflow-x: hidden;
 }
 
-#awiadqbarn .gt_column_spanner_outer {
+#vjvaitteyn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -531,15 +530,15 @@ colnames(nhanes_dataset)</code></pre>
   padding-right: 4px;
 }
 
-#awiadqbarn .gt_column_spanner_outer:first-child {
+#vjvaitteyn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#awiadqbarn .gt_column_spanner_outer:last-child {
+#vjvaitteyn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#awiadqbarn .gt_column_spanner {
+#vjvaitteyn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -551,7 +550,7 @@ colnames(nhanes_dataset)</code></pre>
   width: 100%;
 }
 
-#awiadqbarn .gt_group_heading {
+#vjvaitteyn .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -573,7 +572,7 @@ colnames(nhanes_dataset)</code></pre>
   vertical-align: middle;
 }
 
-#awiadqbarn .gt_empty_group_heading {
+#vjvaitteyn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -588,15 +587,15 @@ colnames(nhanes_dataset)</code></pre>
   vertical-align: middle;
 }
 
-#awiadqbarn .gt_from_md > :first-child {
+#vjvaitteyn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#awiadqbarn .gt_from_md > :last-child {
+#vjvaitteyn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#awiadqbarn .gt_row {
+#vjvaitteyn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -615,7 +614,7 @@ colnames(nhanes_dataset)</code></pre>
   overflow-x: hidden;
 }
 
-#awiadqbarn .gt_stub {
+#vjvaitteyn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -627,7 +626,7 @@ colnames(nhanes_dataset)</code></pre>
   padding-left: 12px;
 }
 
-#awiadqbarn .gt_summary_row {
+#vjvaitteyn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -637,7 +636,7 @@ colnames(nhanes_dataset)</code></pre>
   padding-right: 5px;
 }
 
-#awiadqbarn .gt_first_summary_row {
+#vjvaitteyn .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -647,7 +646,7 @@ colnames(nhanes_dataset)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#awiadqbarn .gt_grand_summary_row {
+#vjvaitteyn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -657,7 +656,7 @@ colnames(nhanes_dataset)</code></pre>
   padding-right: 5px;
 }
 
-#awiadqbarn .gt_first_grand_summary_row {
+#vjvaitteyn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -667,11 +666,11 @@ colnames(nhanes_dataset)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#awiadqbarn .gt_striped {
+#vjvaitteyn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#awiadqbarn .gt_table_body {
+#vjvaitteyn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -680,7 +679,7 @@ colnames(nhanes_dataset)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#awiadqbarn .gt_footnotes {
+#vjvaitteyn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -694,13 +693,13 @@ colnames(nhanes_dataset)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#awiadqbarn .gt_footnote {
+#vjvaitteyn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#awiadqbarn .gt_sourcenotes {
+#vjvaitteyn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -714,41 +713,41 @@ colnames(nhanes_dataset)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#awiadqbarn .gt_sourcenote {
+#vjvaitteyn .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#awiadqbarn .gt_left {
+#vjvaitteyn .gt_left {
   text-align: left;
 }
 
-#awiadqbarn .gt_center {
+#vjvaitteyn .gt_center {
   text-align: center;
 }
 
-#awiadqbarn .gt_right {
+#vjvaitteyn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#awiadqbarn .gt_font_normal {
+#vjvaitteyn .gt_font_normal {
   font-weight: normal;
 }
 
-#awiadqbarn .gt_font_bold {
+#vjvaitteyn .gt_font_bold {
   font-weight: bold;
 }
 
-#awiadqbarn .gt_font_italic {
+#vjvaitteyn .gt_font_italic {
   font-style: italic;
 }
 
-#awiadqbarn .gt_super {
+#vjvaitteyn .gt_super {
   font-size: 65%;
 }
 
-#awiadqbarn .gt_footnote_marks {
+#vjvaitteyn .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -870,7 +869,7 @@ colnames(nhanes_dataset)</code></pre>
 <div id="ordering-data" class="section level1">
 <h1>Ordering data</h1>
 <pre class="r"><code># Look at the current order of rows
-head(nhanes_dataset)</code></pre>
+head(nhanes)</code></pre>
 <pre><code>##    SEQN RIASEX    sex RIDAGEYR age_groups RIDRETH1           race_eth INDFMPIR
 ## 1 93703      2 Female        2     [0,16]        5         Other Race     5.00
 ## 2 93704      1   Male        2     [0,16]        3 Non-Hispanic White     5.00
@@ -892,15 +891,15 @@ head(nhanes_dataset)</code></pre>
 ## 4 More than high school      134       2     5.24      6.1      1.5     3.7
 ## 5 Less than high school      138       1     5.02     11.2      4.2     6.1
 ## 6 Less than high school      138       2     4.59      6.0      1.9     3.6
-##         nlr LBXIRN iron_status URXUAS LBXBCD LBXBPB LBXCOT
-## 1        NA     NA        &lt;NA&gt;     NA     NA     NA     NA
-## 2 0.9142857     NA        &lt;NA&gt;     NA   0.07     NA     NA
-## 3 1.2352941     92      Normal     NA   0.24   2.98  0.028
-## 4 2.4666667    164      Normal     NA   0.21   0.74  0.138
-## 5 1.4523810     91      Normal   5.09   0.14   0.39  0.555
-## 6 1.8947368     90      Normal  24.07   0.73   1.53  0.011</code></pre>
+##         nlr LBXIRN iron_status URXUAS LBXBCD LBXBPB LBXCOT cut_groups
+## 1        NA     NA        &lt;NA&gt;     NA     NA     NA     NA      [0,8]
+## 2 0.9142857     NA        &lt;NA&gt;     NA   0.07     NA     NA      [0,8]
+## 3 1.2352941     92      Normal     NA   0.24   2.98  0.028    (62,80]
+## 4 2.4666667    164      Normal     NA   0.21   0.74  0.138     (8,20]
+## 5 1.4523810     91      Normal   5.09   0.14   0.39  0.555     (8,20]
+## 6 1.8947368     90      Normal  24.07   0.73   1.53  0.011    (62,80]</code></pre>
 <pre class="r"><code># Order by age and then sex
-nhanes_dataset %&gt;%
+nhanes %&gt;%
   arrange(RIDAGEYR, sex) %&gt;%
   head()</code></pre>
 <pre><code>##    SEQN RIASEX  sex RIDAGEYR age_groups RIDRETH1           race_eth INDFMPIR
@@ -924,15 +923,15 @@ nhanes_dataset %&gt;%
 ## 4       NA       NA       NA      NA  NA     NA        &lt;NA&gt;     NA     NA
 ## 5       NA       NA       NA      NA  NA     NA        &lt;NA&gt;     NA     NA
 ## 6       NA       NA       NA      NA  NA     NA        &lt;NA&gt;     NA     NA
-##   LBXBPB LBXCOT
-## 1     NA     NA
-## 2     NA     NA
-## 3     NA     NA
-## 4     NA     NA
-## 5     NA     NA
-## 6     NA     NA</code></pre>
+##   LBXBPB LBXCOT cut_groups
+## 1     NA     NA      [0,8]
+## 2     NA     NA      [0,8]
+## 3     NA     NA      [0,8]
+## 4     NA     NA      [0,8]
+## 5     NA     NA      [0,8]
+## 6     NA     NA      [0,8]</code></pre>
 <pre class="r"><code># Descending order by age and then sex
-nhanes_dataset %&gt;%
+nhanes %&gt;%
   arrange(desc(RIDAGEYR, sex)) %&gt;%
   head()</code></pre>
 <pre><code>##    SEQN RIASEX    sex RIDAGEYR age_groups RIDRETH1           race_eth INDFMPIR
@@ -956,43 +955,43 @@ nhanes_dataset %&gt;%
 ## 4      134       1       NA       NA       NA      NA       NA     NA
 ## 5      134       1     4.10      6.7      1.0     4.9 4.900000    105
 ## 6      143       2     4.99      9.3      2.7     5.9 2.185185     53
-##   iron_status URXUAS LBXBCD LBXBPB LBXCOT
-## 1      Normal     NA   0.12   1.65  0.011
-## 2      Normal     NA   0.37   0.90  0.011
-## 3      Normal     NA   0.54   1.76  0.011
-## 4        &lt;NA&gt;     NA     NA     NA     NA
-## 5      Normal   3.26   0.17   2.92  0.019
-## 6   Deficient     NA   0.20   1.16  0.011</code></pre>
+##   iron_status URXUAS LBXBCD LBXBPB LBXCOT cut_groups
+## 1      Normal     NA   0.12   1.65  0.011    (62,80]
+## 2      Normal     NA   0.37   0.90  0.011    (62,80]
+## 3      Normal     NA   0.54   1.76  0.011    (62,80]
+## 4        &lt;NA&gt;     NA     NA     NA     NA    (62,80]
+## 5      Normal   3.26   0.17   2.92  0.019    (62,80]
+## 6   Deficient     NA   0.20   1.16  0.011    (62,80]</code></pre>
 </div>
-<div id="filter-to-subset-the-dataset" class="section level1">
-<h1>Filter to subset the dataset</h1>
+<div id="filter-rows-of-the-dataset" class="section level1">
+<h1>Filter rows of the dataset</h1>
 <pre class="r"><code># Practice filtering: Keep only the female participants
-table(nhanes_dataset$sex) # What do you expect?</code></pre>
+table(nhanes$sex) # What do you expect?</code></pre>
 <pre><code>## 
 ##   Male Female 
 ##   4557   4697</code></pre>
-<pre class="r"><code>nhanes_subset &lt;- nhanes_dataset %&gt;%
+<pre class="r"><code>nhanes_subset &lt;- nhanes %&gt;%
   filter(sex == &quot;Female&quot;)
 dim(nhanes_subset) # What do you get?</code></pre>
-<pre><code>## [1] 4697   26</code></pre>
+<pre><code>## [1] 4697   27</code></pre>
 <pre class="r"><code># Keep only the participants who are iron deficient and older than 60 years using filter()
-table(nhanes_dataset$iron_status, nhanes_dataset$RIDAGEYR &gt;= 60) # What do you expect?</code></pre>
+table(nhanes$iron_status, nhanes$RIDAGEYR &gt;= 60) # What do you expect?</code></pre>
 <pre><code>##            
 ##             FALSE TRUE
 ##   Deficient  1000  376
 ##   Excessive   112   30
 ##   Normal     2915 1489</code></pre>
-<pre class="r"><code>nhanes_subset &lt;- nhanes_dataset %&gt;%
+<pre class="r"><code>nhanes_subset &lt;- nhanes %&gt;%
   filter(iron_status == &quot;Deficient&quot; &amp; RIDAGEYR &gt;= 60)
 dim(nhanes_subset) # What do you get?</code></pre>
-<pre><code>## [1] 376  26</code></pre>
+<pre><code>## [1] 376  27</code></pre>
 <pre class="r"><code># Now can calculate univariate descriptive statistics on the subset datasets</code></pre>
 </div>
 <div id="calculate-bivariate-descriptive-statistics" class="section level1">
 <h1>Calculate bivariate descriptive statistics</h1>
 <pre class="r"><code># Calculating statistics by groups - tidyverse
 # Note: good practice to add ungroup() after using it to avoid the dataset staying grouped
-nhanes_dataset %&gt;%
+nhanes %&gt;%
   group_by(sex) %&gt;%
   summarise(age_min = min(RIDAGEYR),
             age_25_quart = quantile(RIDAGEYR, probs = 0.25),
@@ -1011,7 +1010,7 @@ nhanes_dataset %&gt;%
 <div id="calculate-bivariate-descriptive-statistics-on-categorical-variables" class="section level1">
 <h1>Calculate bivariate descriptive statistics on categorical variables</h1>
 <pre class="r"><code># Base R method
-table(nhanes_dataset$race_eth, nhanes_dataset$sex)</code></pre>
+table(nhanes$race_eth, nhanes$sex)</code></pre>
 <pre><code>##                     
 ##                      Male Female
 ##   Non-Hispanic White 1583   1567
@@ -1020,7 +1019,7 @@ table(nhanes_dataset$race_eth, nhanes_dataset$sex)</code></pre>
 ##   Other Hispanic      400    420
 ##   Other Race          894    908</code></pre>
 <pre class="r"><code># Tidyverse method
-nhanes_dataset %&gt;% 
+nhanes %&gt;% 
     count(race_eth, sex) %&gt;%
     mutate(percent = n / sum(n) * 100)</code></pre>
 <pre><code>##              race_eth    sex    n   percent
@@ -1041,7 +1040,7 @@ nhanes_dataset %&gt;%
 <div id="bivariate-descriptive-statistics-publication-ready-table" class="section level2">
 <h2>Bivariate descriptive statistics, publication ready table</h2>
 <pre class="r"><code># Bivariate table by sex using gtsummary - will take about 5 seconds to run
-bivar_nhanes &lt;- nhanes_dataset %&gt;%
+bivar_nhanes &lt;- nhanes %&gt;%
   select(RIDAGEYR, 
          sex, 
          race_eth,
@@ -1080,12 +1079,12 @@ bivar_nhanes &lt;- nhanes_dataset %&gt;%
 
 #View table
 bivar_nhanes</code></pre>
-<div id="vcmxrmjqko" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="skrgunrxfu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#vcmxrmjqko .gt_table {
+#skrgunrxfu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1110,7 +1109,7 @@ bivar_nhanes</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#vcmxrmjqko .gt_heading {
+#skrgunrxfu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1122,7 +1121,7 @@ bivar_nhanes</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vcmxrmjqko .gt_title {
+#skrgunrxfu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1132,7 +1131,7 @@ bivar_nhanes</code></pre>
   border-bottom-width: 0;
 }
 
-#vcmxrmjqko .gt_subtitle {
+#skrgunrxfu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1142,13 +1141,13 @@ bivar_nhanes</code></pre>
   border-top-width: 0;
 }
 
-#vcmxrmjqko .gt_bottom_border {
+#skrgunrxfu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vcmxrmjqko .gt_col_headings {
+#skrgunrxfu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1163,7 +1162,7 @@ bivar_nhanes</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vcmxrmjqko .gt_col_heading {
+#skrgunrxfu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1183,7 +1182,7 @@ bivar_nhanes</code></pre>
   overflow-x: hidden;
 }
 
-#vcmxrmjqko .gt_column_spanner_outer {
+#skrgunrxfu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1195,15 +1194,15 @@ bivar_nhanes</code></pre>
   padding-right: 4px;
 }
 
-#vcmxrmjqko .gt_column_spanner_outer:first-child {
+#skrgunrxfu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vcmxrmjqko .gt_column_spanner_outer:last-child {
+#skrgunrxfu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vcmxrmjqko .gt_column_spanner {
+#skrgunrxfu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1215,7 +1214,7 @@ bivar_nhanes</code></pre>
   width: 100%;
 }
 
-#vcmxrmjqko .gt_group_heading {
+#skrgunrxfu .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1237,7 +1236,7 @@ bivar_nhanes</code></pre>
   vertical-align: middle;
 }
 
-#vcmxrmjqko .gt_empty_group_heading {
+#skrgunrxfu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1252,15 +1251,15 @@ bivar_nhanes</code></pre>
   vertical-align: middle;
 }
 
-#vcmxrmjqko .gt_from_md > :first-child {
+#skrgunrxfu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vcmxrmjqko .gt_from_md > :last-child {
+#skrgunrxfu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vcmxrmjqko .gt_row {
+#skrgunrxfu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1279,7 +1278,7 @@ bivar_nhanes</code></pre>
   overflow-x: hidden;
 }
 
-#vcmxrmjqko .gt_stub {
+#skrgunrxfu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1291,7 +1290,7 @@ bivar_nhanes</code></pre>
   padding-left: 12px;
 }
 
-#vcmxrmjqko .gt_summary_row {
+#skrgunrxfu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1301,7 +1300,7 @@ bivar_nhanes</code></pre>
   padding-right: 5px;
 }
 
-#vcmxrmjqko .gt_first_summary_row {
+#skrgunrxfu .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1311,7 +1310,7 @@ bivar_nhanes</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#vcmxrmjqko .gt_grand_summary_row {
+#skrgunrxfu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1321,7 +1320,7 @@ bivar_nhanes</code></pre>
   padding-right: 5px;
 }
 
-#vcmxrmjqko .gt_first_grand_summary_row {
+#skrgunrxfu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1331,11 +1330,11 @@ bivar_nhanes</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#vcmxrmjqko .gt_striped {
+#skrgunrxfu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vcmxrmjqko .gt_table_body {
+#skrgunrxfu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1344,7 +1343,7 @@ bivar_nhanes</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#vcmxrmjqko .gt_footnotes {
+#skrgunrxfu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1358,13 +1357,13 @@ bivar_nhanes</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vcmxrmjqko .gt_footnote {
+#skrgunrxfu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#vcmxrmjqko .gt_sourcenotes {
+#skrgunrxfu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1378,41 +1377,41 @@ bivar_nhanes</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vcmxrmjqko .gt_sourcenote {
+#skrgunrxfu .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#vcmxrmjqko .gt_left {
+#skrgunrxfu .gt_left {
   text-align: left;
 }
 
-#vcmxrmjqko .gt_center {
+#skrgunrxfu .gt_center {
   text-align: center;
 }
 
-#vcmxrmjqko .gt_right {
+#skrgunrxfu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vcmxrmjqko .gt_font_normal {
+#skrgunrxfu .gt_font_normal {
   font-weight: normal;
 }
 
-#vcmxrmjqko .gt_font_bold {
+#skrgunrxfu .gt_font_bold {
   font-weight: bold;
 }
 
-#vcmxrmjqko .gt_font_italic {
+#skrgunrxfu .gt_font_italic {
   font-style: italic;
 }
 
-#vcmxrmjqko .gt_super {
+#skrgunrxfu .gt_super {
   font-size: 65%;
 }
 
-#vcmxrmjqko .gt_footnote_marks {
+#skrgunrxfu .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -1673,12 +1672,12 @@ bivar_nhanes %&gt;%
 <div id="do-any-of-our-variables-have-missing-values" class="section level1">
 <h1>Do any of our variables have missing values?</h1>
 <pre class="r"><code># How many participants have complete data on all variables?
-nhanes_dataset %&gt;%
-  na.omit() %&gt;% #exclude any participants with missing data
+nhanes %&gt;%
+  drop_na() %&gt;% #exclude any participants with missing data
   dim() #what are the dimensions after excluding missing data?</code></pre>
-<pre><code>## [1]  0 26</code></pre>
+<pre><code>## [1]  0 27</code></pre>
 <pre class="r"><code># What variables have the most missing data?
-summary(nhanes_dataset)</code></pre>
+summary(nhanes)</code></pre>
 <pre><code>##       SEQN            RIASEX          sex          RIDAGEYR       age_groups  
 ##  Min.   : 93703   Min.   :1.000   Male  :4557   Min.   : 0.00   [0,16] :3250  
 ##  1st Qu.: 96016   1st Qu.:1.000   Female:4697   1st Qu.:11.00   (16,32]:1519  
@@ -1727,13 +1726,13 @@ summary(nhanes_dataset)</code></pre>
 ##  3rd Qu.:106.00                    3rd Qu.:  12.23   3rd Qu.: 0.4200  
 ##  Max.   :481.00                    Max.   :2802.29   Max.   :13.0300  
 ##  NA&#39;s   :3332                      NA&#39;s   :6462      NA&#39;s   :1741     
-##      LBXBPB           LBXCOT        
-##  Min.   : 0.050   Min.   :   0.011  
-##  1st Qu.: 0.460   1st Qu.:   0.011  
-##  Median : 0.760   Median :   0.032  
-##  Mean   : 1.084   Mean   :  40.370  
-##  3rd Qu.: 1.300   3rd Qu.:   0.567  
-##  Max.   :42.480   Max.   :1620.000  
+##      LBXBPB           LBXCOT           cut_groups  
+##  Min.   : 0.050   Min.   :   0.011   [0,8]  :1904  
+##  1st Qu.: 0.460   1st Qu.:   0.011   (8,20] :1857  
+##  Median : 0.760   Median :   0.032   (20,42]:1868  
+##  Mean   : 1.084   Mean   :  40.370   (42,62]:1884  
+##  3rd Qu.: 1.300   3rd Qu.:   0.567   (62,80]:1741  
+##  Max.   :42.480   Max.   :1620.000                 
 ##  NA&#39;s   :2370     NA&#39;s   :2153</code></pre>
 </div>
 <div id="check-function-default-settings-for-handling-missing-values" class="section level1">
@@ -1741,27 +1740,27 @@ summary(nhanes_dataset)</code></pre>
 <pre class="r"><code>### How do functions handle missing values?
 
 #calculate summary statistics on iron
-summary(nhanes_dataset$LBXIRN)</code></pre>
+summary(nhanes$LBXIRN)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
 ##   11.00   61.00   82.00   86.25  106.00  481.00    3332</code></pre>
 <pre class="r"><code>#calculate the mean of iron
-mean(nhanes_dataset$LBXIRN)</code></pre>
+mean(nhanes$LBXIRN)</code></pre>
 <pre><code>## [1] NA</code></pre>
-<pre class="r"><code>mean(nhanes_dataset$LBXIRN, na.rm = TRUE)</code></pre>
+<pre class="r"><code>mean(nhanes$LBXIRN, na.rm = TRUE)</code></pre>
 <pre><code>## [1] 86.25464</code></pre>
 <pre class="r"><code>#note the na.omit - remove all rows that include NAs
-mean(na.omit(nhanes_dataset$LBXIRN))</code></pre>
+mean(na.omit(nhanes$LBXIRN))</code></pre>
 <pre><code>## [1] 86.25464</code></pre>
 <pre class="r"><code>#calculate a correlation between age and iron concentration
-cor(nhanes_dataset$RIDAGEYR, nhanes_dataset$LBXIRN)</code></pre>
+cor(nhanes$RIDAGEYR, nhanes$LBXIRN)</code></pre>
 <pre><code>## [1] NA</code></pre>
-<pre class="r"><code>cor(nhanes_dataset$RIDAGEYR, nhanes_dataset$LBXIRN, use=&quot;complete.obs&quot;)</code></pre>
+<pre class="r"><code>cor(nhanes$RIDAGEYR, nhanes$LBXIRN, use=&quot;complete.obs&quot;)</code></pre>
 <pre><code>## [1] -0.01858113</code></pre>
 </div>
 <div id="try-compiling-results-with-a-for-loop" class="section level1">
 <h1>Try compiling results with a for loop</h1>
 <pre class="r"><code># Filter to the numeric variables, we&#39;ll be calculating numeric descriptive statistics
-nhanes_numeric &lt;- nhanes_dataset %&gt;%
+nhanes_numeric &lt;- nhanes %&gt;%
     select_if(is.numeric)
 
 # First prep the output dataset - set up blank columns
@@ -1770,7 +1769,7 @@ out &lt;- data.frame(matrix(nrow = ncol(nhanes_numeric), ncol = 3))
 # Set the column names for the dataframe
 colnames(out) &lt;- c(&quot;variable&quot;, &quot;mean&quot;, &quot;sd&quot;)
 
-# Pull the column names from nhanes_dataset and set them as the values for the first column
+# Pull the column names from nhanes and set them as the values for the first column
 out[, 1] &lt;- colnames(nhanes_numeric)
 
 # Then initiate the loop
@@ -1836,11 +1835,11 @@ format(birth_days_date, &quot;%a-%d%b%y&quot;)</code></pre>
 <h1>Calculate age as of today’s date</h1>
 <pre class="r"><code>date_today &lt;- Sys.Date() # Sys.time or Sys.Date: Current time/Date
 date_today</code></pre>
-<pre><code>## [1] &quot;2021-12-12&quot;</code></pre>
+<pre><code>## [1] &quot;2022-01-16&quot;</code></pre>
 <pre class="r"><code>current_age &lt;- (date_today - birth_days_date) / 365.25
 current_age</code></pre>
 <pre><code>## Time differences in days
-## [1] 51.94524 41.41821 21.33060 62.11088</code></pre>
+## [1] 52.04107 41.51403 21.42642 62.20671</code></pre>
 <pre class="r"><code>current_age &lt;- trunc(as.numeric(current_age))
 
 
@@ -1848,7 +1847,7 @@ current_age</code></pre>
 bd &lt;- data.frame(Character = birth_days_chr, Standard_Date = birth_days_date, Numeric_Date = as.numeric(birth_days_date), Age = current_age)
 bd</code></pre>
 <pre><code>##    Character Standard_Date Numeric_Date Age
-## 1   1/1/1970    1970-01-01            0  51
+## 1   1/1/1970    1970-01-01            0  52
 ## 2 07/12/1980    1980-07-12         3845  41
 ## 3 08/13/2000    2000-08-13        11182  21
 ## 4  11/2/1959    1959-11-02        -3713  62</code></pre>

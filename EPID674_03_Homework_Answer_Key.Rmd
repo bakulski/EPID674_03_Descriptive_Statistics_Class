@@ -25,7 +25,7 @@ library(flextable)
 ```{r load_dataset}
 
 # Load saved NHANES dataset from Homework 2
-load(here(("nhanes_homework.rda")))
+load(here(("nhanes_homework_dataset.rda")))
 
 ```
 
