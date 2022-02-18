@@ -24,8 +24,8 @@ library(flextable)
 
 ```{r load_dataset}
 
-# Load saved NHANES dataset from Homework 2
-load(here(("nhanes_homework_dataset.rda")))
+# Load saved NHANES homework dataset from the project files
+load(here(("nhanes_homework_dataset.rda")), verbose = TRUE)
 
 ```
 
@@ -50,7 +50,7 @@ nhanes_homework %>%
 
 ```
 The mean digit symbol substitution score is `r round(mean(nhanes_homework$CFDDS, na.rm=T), digits = 2)` rows and the standard deviation is `r round(sd(nhanes_homework$CFDDS, na.rm=T), digits = 2)` columns.
-The digit symbol substitution score minimum is `r min(nhanes_homework$CFDDS, na.rm=T)`, the 25th percentile is `r quantile(nhanes_homework$CFDDS, probs=0.25, na.rm=T)`, the median is `r median(nhanes_homework$CFDDS, na.rm=T)`, the 75th percentile is `r quantile(nhanes_homework$CFDDS, probs=0.27, na.rm=T)`, and the maximum is `r max(nhanes_homework$CFDDS, na.rm=T)`.
+The digit symbol substitution score minimum is `r min(nhanes_homework$CFDDS, na.rm=T)`, the 25th percentile is `r quantile(nhanes_homework$CFDDS, probs=0.25, na.rm=T)`, the median is `r median(nhanes_homework$CFDDS, na.rm=T)`, the 75th percentile is `r quantile(nhanes_homework$CFDDS, probs=0.75, na.rm=T)`, and the maximum is `r max(nhanes_homework$CFDDS, na.rm=T)`.
 
 Interpret the findings: The variable CFDDS appears to have a normal distribution. The mean value is very similar to the median value. The mean and median values are approximately halfway between the 25th and 75th quartile values and they are approximately halfway between the minimum and median values. 
 
