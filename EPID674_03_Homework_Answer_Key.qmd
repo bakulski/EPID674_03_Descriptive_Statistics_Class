@@ -1,0 +1,124 @@
+---
+title: "EPID 674: Descriptive Statistics"
+subtitle: "Homework 3 Answer Key"
+author: "Kelly Bakulski"
+date: "Last compiled on `r format(Sys.Date(), '%B %d, %Y')`"
+format: html
+editor: source
+---
+
+
+# Load libraries
+
+```{r}
+#| label: load_libraries
+#| echo: true
+#| results: hide
+#| message: false
+#| warning: false
+
+
+library(tidyverse)
+library(here)
+library(gtsummary)
+library(flextable)
+```
+
+# Load the dataset
+
+```{r}
+#| label: load_dataset
+
+# Load saved NHANES homework dataset from the project files
+load(here(("nhanes_homework_dataset.rda")), verbose = TRUE)
+
+```
+
+
+# 1. Calculate univariate descriptive statistics on a numeric variable
+
+### Calculate descriptive statistics on the cognition variable. For the cognition variable (CFDDS), calculate the mean, standard deviation, minimum, 25th percentile, median, 75th percentile, and maximum values. 
+
+```{r}
+#| label: univariate_numeric_cognition
+
+# For the cognition variable (CFDDS), calculate the mean, standard deviation, minimum, 25th percentile, median, 75th percentile, and maximum values.  
+nhanes_homework %>%
+  select(CFDDS) %>%
+  drop_na() %>%
+  summarise(cog_mean = mean(CFDDS),
+            cog_sd = sd(CFDDS),
+            cog_min = min(CFDDS),
+            cog_25_quart = quantile(CFDDS, probs = 0.25),
+            cog_median = median(CFDDS),
+            cog_75_quart = quantile(CFDDS, probs = 0.75),
+            cog_max = max(CFDDS))
+
+```
+The mean digit symbol substitution score is `r round(mean(nhanes_homework$CFDDS, na.rm=T), digits = 2)` rows and the standard deviation is `r round(sd(nhanes_homework$CFDDS, na.rm=T), digits = 2)` columns.
+The digit symbol substitution score minimum is `r min(nhanes_homework$CFDDS, na.rm=T)`, the 25th percentile is `r quantile(nhanes_homework$CFDDS, probs=0.25, na.rm=T)`, the median is `r median(nhanes_homework$CFDDS, na.rm=T)`, the 75th percentile is `r quantile(nhanes_homework$CFDDS, probs=0.75, na.rm=T)`, and the maximum is `r max(nhanes_homework$CFDDS, na.rm=T)`.
+
+Interpret the findings: The variable CFDDS appears to have a normal distribution. The mean value is very similar to the median value. The mean and median values are approximately halfway between the 25th and 75th quartile values and they are approximately halfway between the minimum and median values. 
+
+# 2. Calculate univariate descriptive statistics for a factor variable
+
+### For the educational attainment variable (education), calculate the number of participants in each category and the percent of the total sample in each category.
+
+```{r}
+#| label: univariate_factor_education
+
+nhanes_homework %>% 
+	count(education) %>%
+	mutate(percent = n / sum(n) * 100)
+
+```
+The number of participants with less than high school education is `r table(nhanes_homework$education)[1]`, which represents `r round(table(nhanes_homework$education)[1]/sum(table(nhanes_homework$education))*100, digits=2)`% of participants. 
+The number of participants with high school or GED level of education is `r table(nhanes_homework$education)[2]`, which represents `r round(table(nhanes_homework$education)[2]/sum(table(nhanes_homework$education))*100, digits=2)`% of participants. 
+The number of participants with greater than high school education is `r table(nhanes_homework$education)[3]`, which represents `r round(table(nhanes_homework$education)[3]/sum(table(nhanes_homework$education))*100, digits=2)`% of participants. 
+
+Interpret the findings: The educational attainment category with the highest proportion of participants in this dataset is the greater than high school education category.
+
+# 3. Filter dataset and calculate univariate descriptive statistics
+
+### Filter to participants who have mild cognitive impairment. Calculate the number of participants in each educational attainment category and the percent of the total sample in each category.
+
+```{r}
+#| label: filter_univariate
+
+nhanes_homework %>% 
+  filter(MCI == "Mild Cognitive Impairment") %>%
+	count(education) %>%
+	mutate(percent = n / sum(n) * 100)
+
+```
+The number of participants with mild cognitive impairment and less than high school education is `r table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"])[1]`, which represents `r round(table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"])[1]/sum(table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"]))*100, digits=2)`% of participants. 
+The number of participants with mild cognitive impairment and a high school or GED level of education is `r table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"])[2]`, which represents `r round(table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"])[2]/sum(table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"]))*100, digits=2)`% of participants. 
+The number of participants with mild cognitive impairment and greater than high school education is `r table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"])[3]`, which represents `r round(table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"])[3]/sum(table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"]))*100, digits=2)`% of participants. 
+
+Interpret the findings: The proportion of people in the lowest educational attainment category among those with mild cognitive impairment is `r round(table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"])[1]/sum(table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"]))*100, digits=2)`% of participants, which is higher than the proportion of people in the lowest educational attainment category in the entire study population (`r round(table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"])[1]/sum(table(nhanes_homework$education[nhanes_homework$MCI == "Mild Cognitive Impairment"]))*100, digits=2)`% of participants.)
+
+# 4. Calculate bivariate descriptive statistics
+
+### Use the tbl_summary() function to calculate bivariate descriptive statistics on your dataset, split by mild cognitive impairment status (variable name: MCI). Include the following variables as rows in your table (variable names: sex, RIDAGEYR, race_eth, INDFMPIR, education, LBXCOT, LBXBPB, LBXBCD).  
+```{r}
+#| label: bivariate_descriptives
+
+nhanes_homework %>%
+  select(sex,
+         RIDAGEYR,
+         race_eth,
+         INDFMPIR,
+         education,
+         LBXCOT,
+         LBXBPB,
+         LBXBCD,
+         MCI) %>%
+  tbl_summary(by = MCI,
+              label = list(race_eth    ~ "Race/Ethnicity",
+                           education  ~ "Educational Attainment"))
+
+```
+
+Interpret the findings: The median age in years among those with mild cognitive impairment is `r median(nhanes_homework$RIDAGEYR[nhanes_homework$MCI =="Mild Cognitive Impairment"], na.rm =T)`, which is higher than the median age in years among those without impairment (`r median(nhanes_homework$RIDAGEYR[nhanes_homework$MCI =="No Impairment"], na.rm =T)` years).
+
+The median blood lead level in ug/dL among those with mild cognitive impairment is `r median(nhanes_homework$LBXBPB[nhanes_homework$MCI =="Mild Cognitive Impairment"], na.rm =T)`, which is higher than the median age in years among those without impairment (`r median(nhanes_homework$LBXBPB[nhanes_homework$MCI =="No Impairment"], na.rm =T)` ug/dL).
