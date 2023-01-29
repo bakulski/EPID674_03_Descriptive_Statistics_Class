@@ -1,0 +1,2125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kelly Bakulski, Lauren Middleton">
+<meta name="dcterms.date" content="2023-01-29">
+
+<title>EPID674 Epidemiologic Data Analysis using R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="EPID674_04_Class_Descriptive_Statistics_files/libs/clipboard/clipboard.min.js"></script>
+<script src="EPID674_04_Class_Descriptive_Statistics_files/libs/quarto-html/quarto.js"></script>
+<script src="EPID674_04_Class_Descriptive_Statistics_files/libs/quarto-html/popper.min.js"></script>
+<script src="EPID674_04_Class_Descriptive_Statistics_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="EPID674_04_Class_Descriptive_Statistics_files/libs/quarto-html/anchor.min.js"></script>
+<link href="EPID674_04_Class_Descriptive_Statistics_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="EPID674_04_Class_Descriptive_Statistics_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="EPID674_04_Class_Descriptive_Statistics_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="EPID674_04_Class_Descriptive_Statistics_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="EPID674_04_Class_Descriptive_Statistics_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">EPID674 Epidemiologic Data Analysis using R</h1>
+<p class="subtitle lead">Descriptive Statistics, Tables</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kelly Bakulski, Lauren Middleton </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 29, 2023</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="descriptive-statistics-tables-misc." class="level2">
+<h2 class="anchored" data-anchor-id="descriptive-statistics-tables-misc.">Descriptive Statistics, Tables, Misc.</h2>
+</section>
+<section id="install-new-packages" class="level1">
+<h1>Install new packages</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install packages. Do this only once.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We have this completed for you on Cloud, so you do not need to run this.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repos=</span><span class="st">"https://cran.rstudio.com"</span> )</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"here"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"gtsummary"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"flextable"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"lubridate"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># To avoid installing every time: change set up in curly brackets to eval=FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="set-up-query-the-current-r-environment-load-relevant-packages-load-dataset-created-in-week-2" class="level1">
+<h1>Set up: Query the current R environment, load relevant packages, load dataset created in Week 2</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">search</span>() <span class="co"># list the packages, environments, or data frames</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] ".GlobalEnv"        "tools:quarto"      "package:stats"    
+ [4] "package:graphics"  "package:grDevices" "package:utils"    
+ [7] "package:datasets"  "package:methods"   "Autoloads"        
+[10] "package:base"     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>() <span class="co"># list the objects</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>character(0)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">##### Load these packages for the current session</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ purrr   1.0.0 
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+✔ readr   2.1.3      ✔ forcats 0.5.2 
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at /cloud/project</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'flextable'
+
+The following objects are masked from 'package:gtsummary':
+
+    as_flextable, continuous_summary
+
+The following object is masked from 'package:purrr':
+
+    compose</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: timechange
+
+Attaching package: 'lubridate'
+
+The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>() <span class="co"># record the versions of packages used in the current session</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.2.2 (2022-10-31)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 20.04.5 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/atlas/libblas.so.3.10.3
+LAPACK: /usr/lib/x86_64-linux-gnu/atlas/liblapack.so.3.10.3
+
+locale:
+ [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+ [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+ [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+[10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] lubridate_1.9.0  timechange_0.1.1 flextable_0.8.3  gtsummary_1.6.3 
+ [5] here_1.0.1       forcats_0.5.2    stringr_1.5.0    dplyr_1.0.10    
+ [9] purrr_1.0.0      readr_2.1.3      tidyr_1.2.1      tibble_3.1.8    
+[13] ggplot2_3.4.0    tidyverse_1.3.2 
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.9           assertthat_0.2.1     rprojroot_2.0.3     
+ [4] digest_0.6.31        utf8_1.2.2           R6_2.5.1            
+ [7] cellranger_1.1.0     backports_1.4.1      reprex_2.0.2        
+[10] evaluate_0.19        httr_1.4.4           pillar_1.8.1        
+[13] gdtools_0.2.4        rlang_1.0.6          uuid_1.1-0          
+[16] googlesheets4_1.0.1  readxl_1.4.1         data.table_1.14.6   
+[19] rstudioapi_0.14      rmarkdown_2.19       googledrive_2.0.0   
+[22] htmlwidgets_1.6.0    munsell_0.5.0        broom_1.0.2         
+[25] compiler_4.2.2       modelr_0.1.10        xfun_0.36           
+[28] systemfonts_1.0.4    base64enc_0.1-3      pkgconfig_2.0.3     
+[31] htmltools_0.5.4      tidyselect_1.2.0     fansi_1.0.3         
+[34] crayon_1.5.2         tzdb_0.3.0           dbplyr_2.2.1        
+[37] withr_2.5.0          grid_4.2.2           jsonlite_1.8.4      
+[40] gtable_0.3.1         lifecycle_1.0.3      DBI_1.1.3           
+[43] magrittr_2.0.3       scales_1.2.1         zip_2.2.2           
+[46] cli_3.5.0            stringi_1.7.8        broom.helpers_1.10.0
+[49] fs_1.5.2             xml2_1.3.3           ellipsis_0.3.2      
+[52] generics_0.1.3       vctrs_0.5.1          tools_4.2.2         
+[55] glue_1.6.2           officer_0.5.0        hms_1.1.2           
+[58] fastmap_1.1.0        yaml_2.3.6           colorspace_2.0-3    
+[61] gargle_1.2.1         gt_0.8.0             rvest_1.0.3         
+[64] knitr_1.41           haven_2.5.1         </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load saved NHANES dataset from session 02 on Data Management</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">here</span>((<span class="st">"nhanes_class_dataset.rda"</span>)), <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading objects:
+  nhanes</code></pre>
+</div>
+</div>
+</section>
+<section id="data-description-functions-numeric-variables" class="level1">
+<h1>Data description functions, numeric variables</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base R method - quick, good for one variable at a time</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nhanes<span class="sc">$</span>RIDAGEYR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00   11.00   31.00   34.33   58.00   80.00 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(nhanes<span class="sc">$</span>RIDAGEYR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 25.50028</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidyverse method - more code, but can be used to get summary statistics on multiple variables</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">age_min =</span> <span class="fu">min</span>(RIDAGEYR),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_25_quart =</span> <span class="fu">quantile</span>(RIDAGEYR, <span class="at">probs =</span> <span class="fl">0.25</span>),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_mean =</span> <span class="fu">mean</span>(RIDAGEYR),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_median =</span> <span class="fu">median</span>(RIDAGEYR),</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_75_quart =</span> <span class="fu">quantile</span>(RIDAGEYR, <span class="at">probs =</span> <span class="fl">0.75</span>),</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_iqr =</span> <span class="fu">IQR</span>(RIDAGEYR),</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_max =</span> <span class="fu">max</span>(RIDAGEYR))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  age_min age_25_quart age_mean age_median age_75_quart age_iqr age_max
+1       0           11 34.33423         31           58      47      80</code></pre>
+</div>
+</div>
+</section>
+<section id="check-your-understanding" class="level1">
+<h1>Check your understanding!</h1>
+<p>Calculate descriptive statistics on the poverty income variable: INDFMPIR Specifically, calculate the minimum, 25th percentile, median, mean, 75th percentile, and maximum. * Start by creating a new r code chunk * Pick your method for calculating descriptive statistics!</p>
+</section>
+<section id="calculate-descriptive-statistics-on-a-categorical-variable" class="level1">
+<h1>Calculate descriptive statistics on a categorical variable</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base R method- quick, good for one variable at a time</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nhanes<span class="sc">$</span>race_eth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Non-Hispanic White   Mexican American Non-Hispanic Black     Other Hispanic 
+              3150               1367               2115                820 
+        Other Race 
+              1802 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidyverse method - more code, but can be used to get summary statistics on combinations of multiple variables</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>nhanes <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(race_eth) <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">percent =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            race_eth    n   percent
+1 Non-Hispanic White 3150 34.039334
+2   Mexican American 1367 14.771990
+3 Non-Hispanic Black 2115 22.854982
+4     Other Hispanic  820  8.861033
+5         Other Race 1802 19.472660</code></pre>
+</div>
+</div>
+</section>
+<section id="reproducible-publication-quality-univariate-tables" class="level1">
+<h1>Reproducible, publication quality univariate tables</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Univariate table using gtsummary package</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(nhanes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "SEQN"            "RIASEX"          "sex"             "RIDAGEYR"       
+ [5] "age_groups"      "RIDRETH1"        "race_eth"        "INDFMPIR"       
+ [9] "DMDEDUC3"        "DMDEDUC2"        "education_youth" "education_adult"
+[13] "education"       "SDMVSTRA"        "SDMVPSU"         "LBXRBCSI"       
+[17] "LBXWBCSI"        "LBDLYMNO"        "LBDNENO"         "nlr"            
+[21] "LBXIRN"          "iron_status"     "URXUAS"          "LBXBCD"         
+[25] "LBXBPB"          "LBXCOT"          "cut_groups"     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(RIDAGEYR, </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>         sex, </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>         race_eth,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>         education,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>         LBXRBCSI,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>         LBXWBCSI,</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>         LBDLYMNO,</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>         LBDNENO,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>         nlr,</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>         LBXIRN,</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>         iron_status,</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>         URXUAS,</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>         LBXBCD,</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>         LBXBPB,</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>         LBXCOT) <span class="sc">%&gt;%</span> <span class="co">#drop SEQN and survey variables so we don't get summary statistics for the identifiers or weights</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">label =</span> <span class="fu">list</span>(education <span class="sc">~</span> <span class="st">"Overall Educational Attainment"</span>, </span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>                           race_eth <span class="sc">~</span> <span class="st">"Race/ethnicity"</span>),</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">statistic =</span> <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="mujyhawtep" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+:where(#mujyhawtep) .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+:where(#mujyhawtep) .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#mujyhawtep) .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+:where(#mujyhawtep) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#mujyhawtep) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#mujyhawtep) .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#mujyhawtep) .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#mujyhawtep) .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+:where(#mujyhawtep) .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+:where(#mujyhawtep) .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+:where(#mujyhawtep) .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+:where(#mujyhawtep) .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+:where(#mujyhawtep) .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+:where(#mujyhawtep) .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#mujyhawtep) .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+:where(#mujyhawtep) .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+:where(#mujyhawtep) .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+:where(#mujyhawtep) .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#mujyhawtep) .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+:where(#mujyhawtep) .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+:where(#mujyhawtep) .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#mujyhawtep) .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+:where(#mujyhawtep) .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+:where(#mujyhawtep) .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#mujyhawtep) .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#mujyhawtep) .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+:where(#mujyhawtep) .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+:where(#mujyhawtep) .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#mujyhawtep) .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#mujyhawtep) .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#mujyhawtep) .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#mujyhawtep) .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#mujyhawtep) .gt_left {
+  text-align: left;
+}
+
+:where(#mujyhawtep) .gt_center {
+  text-align: center;
+}
+
+:where(#mujyhawtep) .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(#mujyhawtep) .gt_font_normal {
+  font-weight: normal;
+}
+
+:where(#mujyhawtep) .gt_font_bold {
+  font-weight: bold;
+}
+
+:where(#mujyhawtep) .gt_font_italic {
+  font-style: italic;
+}
+
+:where(#mujyhawtep) .gt_super {
+  font-size: 65%;
+}
+
+:where(#mujyhawtep) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+:where(#mujyhawtep) .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+:where(#mujyhawtep) .gt_indent_1 {
+  text-indent: 5px;
+}
+
+:where(#mujyhawtep) .gt_indent_2 {
+  text-indent: 10px;
+}
+
+:where(#mujyhawtep) .gt_indent_3 {
+  text-indent: 15px;
+}
+
+:where(#mujyhawtep) .gt_indent_4 {
+  text-indent: 20px;
+}
+
+:where(#mujyhawtep) .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table"><caption>Univariate table</caption>
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>N = 9,254</strong><sup class=&quot;gt_footnote_marks&quot;>1</sup>"><strong>N = 9,254</strong><sup class="gt_footnote_marks">1</sup></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">Age in years at screening</td>
+<td headers="stat_0" class="gt_row gt_center">34 (26)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">sex</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Male</td>
+<td headers="stat_0" class="gt_row gt_center">4,557 (49%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Female</td>
+<td headers="stat_0" class="gt_row gt_center">4,697 (51%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Race/ethnicity</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Non-Hispanic White</td>
+<td headers="stat_0" class="gt_row gt_center">3,150 (34%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Mexican American</td>
+<td headers="stat_0" class="gt_row gt_center">1,367 (15%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Non-Hispanic Black</td>
+<td headers="stat_0" class="gt_row gt_center">2,115 (23%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Other Hispanic</td>
+<td headers="stat_0" class="gt_row gt_center">820 (8.9%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Other Race</td>
+<td headers="stat_0" class="gt_row gt_center">1,802 (19%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Overall Educational Attainment</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Less than high school</td>
+<td headers="stat_0" class="gt_row gt_center">2,055 (26%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Less than 5th grade</td>
+<td headers="stat_0" class="gt_row gt_center">1,142 (15%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;High school or GED</td>
+<td headers="stat_0" class="gt_row gt_center">1,480 (19%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;More than high school</td>
+<td headers="stat_0" class="gt_row gt_center">3,185 (41%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">1,392</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Red blood cell count (million cells/uL)</td>
+<td headers="stat_0" class="gt_row gt_center">4.73 (0.48)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">1,726</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">White blood cell count (1000 cells/uL)</td>
+<td headers="stat_0" class="gt_row gt_center">7.38 (5.11)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">1,726</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Lymphocyte number (1000 cells/uL)</td>
+<td headers="stat_0" class="gt_row gt_center">2.50 (4.32)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">1,731</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Segmented neutrophils num (1000 cell/uL)</td>
+<td headers="stat_0" class="gt_row gt_center">4.03 (1.73)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">1,731</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Segmented neutrophils num (1000 cell/uL)</td>
+<td headers="stat_0" class="gt_row gt_center">1.88 (1.15)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">1,731</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Iron frozen, Serum (ug/dL)</td>
+<td headers="stat_0" class="gt_row gt_center">86 (37)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">3,332</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">iron_status</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Deficient</td>
+<td headers="stat_0" class="gt_row gt_center">1,376 (23%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Excessive</td>
+<td headers="stat_0" class="gt_row gt_center">142 (2.4%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Normal</td>
+<td headers="stat_0" class="gt_row gt_center">4,404 (74%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">3,332</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Arsenic, Total - Urine (ug/L)</td>
+<td headers="stat_0" class="gt_row gt_center">16 (64)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">6,462</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Blood cadmium (ug/L)</td>
+<td headers="stat_0" class="gt_row gt_center">0.37 (0.50)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">1,741</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Blood lead (ug/dL)</td>
+<td headers="stat_0" class="gt_row gt_center">1.08 (1.29)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">2,370</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Cotinine, Serum (ng/mL)</td>
+<td headers="stat_0" class="gt_row gt_center">40 (112)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">2,153</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="2"><sup class="gt_footnote_marks">1</sup> Mean (SD); n (%)</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+<section id="filter-order-bivariate-descriptive-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="filter-order-bivariate-descriptive-statistics">Filter, order, bivariate descriptive statistics</h3>
+</section>
+</section>
+<section id="ordering-data" class="level1">
+<h1>Ordering data</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the current order of rows</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nhanes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   SEQN RIASEX    sex RIDAGEYR age_groups RIDRETH1           race_eth INDFMPIR
+1 93703      2 Female        2     [0,16]        5         Other Race     5.00
+2 93704      1   Male        2     [0,16]        3 Non-Hispanic White     5.00
+3 93705      2 Female       66    (64,80]        4 Non-Hispanic Black     0.82
+4 93706      1   Male       18    (16,32]        5         Other Race       NA
+5 93707      1   Male       13     [0,16]        5         Other Race     1.88
+6 93708      2 Female       66    (64,80]        5         Other Race     1.63
+  DMDEDUC3 DMDEDUC2       education_youth       education_adult
+1       NA       NA                  &lt;NA&gt;                  &lt;NA&gt;
+2       NA       NA                  &lt;NA&gt;                  &lt;NA&gt;
+3       NA        2                  &lt;NA&gt; Less than high school
+4       15       NA More than high school                  &lt;NA&gt;
+5        6       NA Less than high school                  &lt;NA&gt;
+6       NA        1                  &lt;NA&gt; Less than high school
+              education SDMVSTRA SDMVPSU LBXRBCSI LBXWBCSI LBDLYMNO LBDNENO
+1                  &lt;NA&gt;      145       2       NA       NA       NA      NA
+2                  &lt;NA&gt;      143       1     4.25      7.4      3.5     3.2
+3 Less than high school      145       2     5.48      8.6      3.4     4.2
+4 More than high school      134       2     5.24      6.1      1.5     3.7
+5 Less than high school      138       1     5.02     11.2      4.2     6.1
+6 Less than high school      138       2     4.59      6.0      1.9     3.6
+        nlr LBXIRN iron_status URXUAS LBXBCD LBXBPB LBXCOT cut_groups
+1        NA     NA        &lt;NA&gt;     NA     NA     NA     NA      [0,8]
+2 0.9142857     NA        &lt;NA&gt;     NA   0.07     NA     NA      [0,8]
+3 1.2352941     92      Normal     NA   0.24   2.98  0.028    (62,80]
+4 2.4666667    164      Normal     NA   0.21   0.74  0.138     (8,20]
+5 1.4523810     91      Normal   5.09   0.14   0.39  0.555     (8,20]
+6 1.8947368     90      Normal  24.07   0.73   1.53  0.011    (62,80]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by age and then sex</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(RIDAGEYR, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   SEQN RIASEX  sex RIDAGEYR age_groups RIDRETH1           race_eth INDFMPIR
+1 93748      1 Male        0     [0,16]        1   Mexican American     2.79
+2 93786      1 Male        0     [0,16]        4 Non-Hispanic Black     0.52
+3 93854      1 Male        0     [0,16]        3 Non-Hispanic White     3.67
+4 93865      1 Male        0     [0,16]        3 Non-Hispanic White     3.47
+5 93936      1 Male        0     [0,16]        3 Non-Hispanic White     3.74
+6 93962      1 Male        0     [0,16]        3 Non-Hispanic White     5.00
+  DMDEDUC3 DMDEDUC2 education_youth education_adult education SDMVSTRA SDMVPSU
+1       NA       NA            &lt;NA&gt;            &lt;NA&gt;      &lt;NA&gt;      142       2
+2       NA       NA            &lt;NA&gt;            &lt;NA&gt;      &lt;NA&gt;      147       1
+3       NA       NA            &lt;NA&gt;            &lt;NA&gt;      &lt;NA&gt;      143       1
+4       NA       NA            &lt;NA&gt;            &lt;NA&gt;      &lt;NA&gt;      135       1
+5       NA       NA            &lt;NA&gt;            &lt;NA&gt;      &lt;NA&gt;      145       1
+6       NA       NA            &lt;NA&gt;            &lt;NA&gt;      &lt;NA&gt;      145       1
+  LBXRBCSI LBXWBCSI LBDLYMNO LBDNENO nlr LBXIRN iron_status URXUAS LBXBCD
+1       NA       NA       NA      NA  NA     NA        &lt;NA&gt;     NA     NA
+2       NA       NA       NA      NA  NA     NA        &lt;NA&gt;     NA     NA
+3       NA       NA       NA      NA  NA     NA        &lt;NA&gt;     NA     NA
+4       NA       NA       NA      NA  NA     NA        &lt;NA&gt;     NA     NA
+5       NA       NA       NA      NA  NA     NA        &lt;NA&gt;     NA     NA
+6       NA       NA       NA      NA  NA     NA        &lt;NA&gt;     NA     NA
+  LBXBPB LBXCOT cut_groups
+1     NA     NA      [0,8]
+2     NA     NA      [0,8]
+3     NA     NA      [0,8]
+4     NA     NA      [0,8]
+5     NA     NA      [0,8]
+6     NA     NA      [0,8]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descending order by age and then sex</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(RIDAGEYR), sex) <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   SEQN RIASEX  sex RIDAGEYR age_groups RIDRETH1           race_eth INDFMPIR
+1 93768      1 Male       80    (64,80]        3 Non-Hispanic White     3.04
+2 93869      1 Male       80    (64,80]        3 Non-Hispanic White     1.49
+3 93910      1 Male       80    (64,80]        3 Non-Hispanic White       NA
+4 93930      1 Male       80    (64,80]        2     Other Hispanic       NA
+5 93943      1 Male       80    (64,80]        3 Non-Hispanic White     5.00
+6 93963      1 Male       80    (64,80]        3 Non-Hispanic White     2.07
+  DMDEDUC3 DMDEDUC2 education_youth       education_adult             education
+1       NA        3            &lt;NA&gt;    High school or GED    High school or GED
+2       NA        5            &lt;NA&gt; More than high school More than high school
+3       NA        5            &lt;NA&gt; More than high school More than high school
+4       NA        1            &lt;NA&gt; Less than high school Less than high school
+5       NA        5            &lt;NA&gt; More than high school More than high school
+6       NA        2            &lt;NA&gt; Less than high school Less than high school
+  SDMVSTRA SDMVPSU LBXRBCSI LBXWBCSI LBDLYMNO LBDNENO      nlr LBXIRN
+1      139       2     4.64      5.9      1.6     3.5 2.187500     64
+2      134       1     4.10      6.7      1.0     4.9 4.900000    105
+3      143       2       NA       NA       NA      NA       NA     NA
+4      141       2     3.95      5.3      2.0     2.7 1.350000    123
+5      137       2       NA       NA       NA      NA       NA     NA
+6      139       2     3.93      5.7      1.5     2.8 1.866667     90
+  iron_status URXUAS LBXBCD LBXBPB LBXCOT cut_groups
+1      Normal     NA   0.12   1.65  0.011    (62,80]
+2      Normal   3.26   0.17   2.92  0.019    (62,80]
+3        &lt;NA&gt;     NA     NA     NA     NA    (62,80]
+4      Normal   8.63   0.23   0.72  0.060    (62,80]
+5        &lt;NA&gt;     NA     NA     NA     NA    (62,80]
+6      Normal     NA   0.42   1.48  0.011    (62,80]</code></pre>
+</div>
+</div>
+</section>
+<section id="filter-rows-of-the-dataset" class="level1">
+<h1>Filter rows of the dataset</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Practice filtering: Keep only the female participants</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nhanes<span class="sc">$</span>sex) <span class="co"># What do you expect?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  Male Female 
+  4557   4697 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>nhanes_subset <span class="ot">&lt;-</span> nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"Female"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nhanes_subset) <span class="co"># What do you get?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4697   27</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only the participants who are iron deficient and older than 60 years using filter()</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nhanes<span class="sc">$</span>iron_status, nhanes<span class="sc">$</span>RIDAGEYR <span class="sc">&gt;=</span> <span class="dv">60</span>) <span class="co"># What do you expect?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           
+            FALSE TRUE
+  Deficient  1000  376
+  Excessive   112   30
+  Normal     2915 1489</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>nhanes_subset <span class="ot">&lt;-</span> nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(iron_status <span class="sc">==</span> <span class="st">"Deficient"</span> <span class="sc">&amp;</span> RIDAGEYR <span class="sc">&gt;=</span> <span class="dv">60</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nhanes_subset) <span class="co"># What do you get?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 376  27</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now can calculate univariate descriptive statistics on the subset datasets</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="calculate-bivariate-descriptive-statistics" class="level1">
+<h1>Calculate bivariate descriptive statistics</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating statistics by groups - tidyverse</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: good practice to add ungroup() after using it to avoid the dataset staying grouped</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">age_min =</span> <span class="fu">min</span>(RIDAGEYR),</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_25_quart =</span> <span class="fu">quantile</span>(RIDAGEYR, <span class="at">probs =</span> <span class="fl">0.25</span>),</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_mean =</span> <span class="fu">mean</span>(RIDAGEYR),</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_median =</span> <span class="fu">median</span>(RIDAGEYR),</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_75_quart =</span> <span class="fu">quantile</span>(RIDAGEYR, <span class="at">probs =</span> <span class="fl">0.75</span>),</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_iqr =</span> <span class="fu">IQR</span>(RIDAGEYR),</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_max =</span> <span class="fu">max</span>(RIDAGEYR)) <span class="sc">%&gt;%</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 8
+  sex    age_min age_25_quart age_mean age_median age_75_quart age_iqr age_max
+  &lt;fct&gt;    &lt;int&gt;        &lt;dbl&gt;    &lt;dbl&gt;      &lt;int&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;int&gt;
+1 Male         0           10     34.1         30           58      48      80
+2 Female       0           11     34.5         32           57      46      80</code></pre>
+</div>
+</div>
+</section>
+<section id="calculate-bivariate-descriptive-statistics-on-categorical-variables" class="level1">
+<h1>Calculate bivariate descriptive statistics on categorical variables</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base R method</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nhanes<span class="sc">$</span>race_eth, nhanes<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    
+                     Male Female
+  Non-Hispanic White 1583   1567
+  Mexican American    648    719
+  Non-Hispanic Black 1032   1083
+  Other Hispanic      400    420
+  Other Race          894    908</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidyverse method</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>nhanes <span class="sc">%&gt;%</span> </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(race_eth, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">percent =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             race_eth    sex    n   percent
+1  Non-Hispanic White   Male 1583 17.106116
+2  Non-Hispanic White Female 1567 16.933218
+3    Mexican American   Male  648  7.002377
+4    Mexican American Female  719  7.769613
+5  Non-Hispanic Black   Male 1032 11.151934
+6  Non-Hispanic Black Female 1083 11.703047
+7      Other Hispanic   Male  400  4.322455
+8      Other Hispanic Female  420  4.538578
+9          Other Race   Male  894  9.660687
+10         Other Race Female  908  9.811973</code></pre>
+</div>
+</div>
+</section>
+<section id="check-your-understanding-1" class="level1">
+<h1>Check your understanding!</h1>
+<p>Calculate the bivariate descriptive statistics between the iron status and age group variables: iron_status and age_groups * Start by creating a new r code chunk * Identify the types of variables to determine the descriptive statistics to calculate * Try calculating them!</p>
+<section id="bivariate-descriptive-statistics-publication-ready-table" class="level2">
+<h2 class="anchored" data-anchor-id="bivariate-descriptive-statistics-publication-ready-table">Bivariate descriptive statistics, publication ready table</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bivariate table by sex using gtsummary - will take about 5 seconds to run</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>bivar_nhanes <span class="ot">&lt;-</span> nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(RIDAGEYR, </span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>         sex, </span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>         race_eth,</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>         education,</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>         INDFMPIR,</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>         LBXRBCSI,</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>         LBXWBCSI,</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>         LBDLYMNO,</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>         LBDNENO,</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>         nlr,</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>         LBXIRN,</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>         iron_status,</span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>         URXUAS,</span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>         LBXBCD,</span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>         LBXBPB,</span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>         LBXCOT) <span class="sc">%&gt;%</span></span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">by =</span> sex, <span class="co">#stratify by sex</span></span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> <span class="fu">list</span>(RIDAGEYR    <span class="sc">~</span> <span class="st">"Age (years)"</span>, <span class="co">#update the variable names</span></span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>                           race_eth    <span class="sc">~</span> <span class="st">"Race/Ethnicity"</span>,</span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>                           INDFMPIR    <span class="sc">~</span> <span class="st">"Poverty-Income Ratio"</span>,</span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a>                           LBXRBCSI    <span class="sc">~</span> <span class="st">"Red Blood Cell Count (million cells/uL)"</span>,</span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a>                           LBXIRN      <span class="sc">~</span> <span class="st">"Iron (ug/dL)"</span>,</span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a>                           iron_status <span class="sc">~</span> <span class="st">"Iron Status"</span>,</span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a>                           nlr         <span class="sc">~</span> <span class="st">"Neutrophil:Lymphocyte Ratio"</span>),</span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a>              <span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>, <span class="co">#use mean and standard deviation for continuous variables</span></span>
+<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="st">"{n} ({p}%)"</span>),  <span class="co">#use count and percentage for categorical variables</span></span>
+<span id="cb52-29"><a href="#cb52-29" aria-hidden="true" tabindex="-1"></a>              <span class="at">digits =</span> <span class="fu">list</span>(<span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="co">#adds no decimal places to counts and one decimal to percentages</span></span>
+<span id="cb52-30"><a href="#cb52-30" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>), <span class="co">#adds one decimal place to mean and sd values</span></span>
+<span id="cb52-31"><a href="#cb52-31" aria-hidden="true" tabindex="-1"></a>              <span class="at">missing_text =</span> <span class="st">"Missing (n)"</span></span>
+<span id="cb52-32"><a href="#cb52-32" aria-hidden="true" tabindex="-1"></a>              ) <span class="sc">%&gt;%</span></span>
+<span id="cb52-33"><a href="#cb52-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_p</span>() <span class="sc">%&gt;%</span> <span class="co">#compares male vs female, does not include overall in p-value calculation</span></span>
+<span id="cb52-34"><a href="#cb52-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overall</span>() <span class="sc">%&gt;%</span> <span class="co">#adds column with non-stratified summary statistics</span></span>
+<span id="cb52-35"><a href="#cb52-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_header</span>(label <span class="sc">~</span> <span class="st">"**Variable**"</span>) <span class="sc">%&gt;%</span> <span class="co">#the asterisks bold the label</span></span>
+<span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_spanning_header</span>(<span class="fu">c</span>(<span class="st">"stat_1"</span>, <span class="st">"stat_2"</span>) <span class="sc">~</span> <span class="st">"**Sex**"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb52-37"><a href="#cb52-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold_labels</span>()</span>
+<span id="cb52-38"><a href="#cb52-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-39"><a href="#cb52-39" aria-hidden="true" tabindex="-1"></a><span class="co">#View table</span></span>
+<span id="cb52-40"><a href="#cb52-40" aria-hidden="true" tabindex="-1"></a>bivar_nhanes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="fhtsdmmzbk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+:where(#fhtsdmmzbk) .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+:where(#fhtsdmmzbk) .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#fhtsdmmzbk) .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+:where(#fhtsdmmzbk) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#fhtsdmmzbk) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#fhtsdmmzbk) .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#fhtsdmmzbk) .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#fhtsdmmzbk) .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+:where(#fhtsdmmzbk) .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+:where(#fhtsdmmzbk) .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+:where(#fhtsdmmzbk) .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+:where(#fhtsdmmzbk) .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+:where(#fhtsdmmzbk) .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+:where(#fhtsdmmzbk) .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#fhtsdmmzbk) .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+:where(#fhtsdmmzbk) .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+:where(#fhtsdmmzbk) .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+:where(#fhtsdmmzbk) .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#fhtsdmmzbk) .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+:where(#fhtsdmmzbk) .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+:where(#fhtsdmmzbk) .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#fhtsdmmzbk) .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+:where(#fhtsdmmzbk) .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+:where(#fhtsdmmzbk) .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#fhtsdmmzbk) .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#fhtsdmmzbk) .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+:where(#fhtsdmmzbk) .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+:where(#fhtsdmmzbk) .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#fhtsdmmzbk) .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#fhtsdmmzbk) .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#fhtsdmmzbk) .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#fhtsdmmzbk) .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#fhtsdmmzbk) .gt_left {
+  text-align: left;
+}
+
+:where(#fhtsdmmzbk) .gt_center {
+  text-align: center;
+}
+
+:where(#fhtsdmmzbk) .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(#fhtsdmmzbk) .gt_font_normal {
+  font-weight: normal;
+}
+
+:where(#fhtsdmmzbk) .gt_font_bold {
+  font-weight: bold;
+}
+
+:where(#fhtsdmmzbk) .gt_font_italic {
+  font-style: italic;
+}
+
+:where(#fhtsdmmzbk) .gt_super {
+  font-size: 65%;
+}
+
+:where(#fhtsdmmzbk) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+:where(#fhtsdmmzbk) .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+:where(#fhtsdmmzbk) .gt_indent_1 {
+  text-indent: 5px;
+}
+
+:where(#fhtsdmmzbk) .gt_indent_2 {
+  text-indent: 10px;
+}
+
+:where(#fhtsdmmzbk) .gt_indent_3 {
+  text-indent: 15px;
+}
+
+:where(#fhtsdmmzbk) .gt_indent_4 {
+  text-indent: 20px;
+}
+
+:where(#fhtsdmmzbk) .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table"><caption>Bivariate table</caption>
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="<strong>Variable</strong>"><strong>Variable</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="2" colspan="1" scope="col" id="<strong>Overall</strong>, N = 9,254<sup class=&quot;gt_footnote_marks&quot;>1</sup>"><strong>Overall</strong>, N = 9,254<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="<strong>Sex</strong>">
+        <span class="gt_column_spanner"><strong>Sex</strong></span>
+      </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="2" colspan="1" scope="col" id="<strong>p-value</strong><sup class=&quot;gt_footnote_marks&quot;>2</sup>"><strong>p-value</strong><sup class="gt_footnote_marks">2</sup></th>
+    </tr>
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Male</strong>, N = 4,557<sup class=&quot;gt_footnote_marks&quot;>1</sup>"><strong>Male</strong>, N = 4,557<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Female</strong>, N = 4,697<sup class=&quot;gt_footnote_marks&quot;>1</sup>"><strong>Female</strong>, N = 4,697<sup class="gt_footnote_marks">1</sup></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Age (years)</td>
+<td headers="stat_0" class="gt_row gt_center">34.3 (25.5)</td>
+<td headers="stat_1" class="gt_row gt_center">34.1 (25.8)</td>
+<td headers="stat_2" class="gt_row gt_center">34.5 (25.3)</td>
+<td headers="p.value" class="gt_row gt_center">0.3</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Race/Ethnicity</td>
+<td headers="stat_0" class="gt_row gt_center"></td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td>
+<td headers="p.value" class="gt_row gt_center">0.5</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Non-Hispanic White</td>
+<td headers="stat_0" class="gt_row gt_center">3,150 (34.0%)</td>
+<td headers="stat_1" class="gt_row gt_center">1,583 (34.7%)</td>
+<td headers="stat_2" class="gt_row gt_center">1,567 (33.4%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Mexican American</td>
+<td headers="stat_0" class="gt_row gt_center">1,367 (14.8%)</td>
+<td headers="stat_1" class="gt_row gt_center">648 (14.2%)</td>
+<td headers="stat_2" class="gt_row gt_center">719 (15.3%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Non-Hispanic Black</td>
+<td headers="stat_0" class="gt_row gt_center">2,115 (22.9%)</td>
+<td headers="stat_1" class="gt_row gt_center">1,032 (22.6%)</td>
+<td headers="stat_2" class="gt_row gt_center">1,083 (23.1%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Other Hispanic</td>
+<td headers="stat_0" class="gt_row gt_center">820 (8.9%)</td>
+<td headers="stat_1" class="gt_row gt_center">400 (8.8%)</td>
+<td headers="stat_2" class="gt_row gt_center">420 (8.9%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Other Race</td>
+<td headers="stat_0" class="gt_row gt_center">1,802 (19.5%)</td>
+<td headers="stat_1" class="gt_row gt_center">894 (19.6%)</td>
+<td headers="stat_2" class="gt_row gt_center">908 (19.3%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">education</td>
+<td headers="stat_0" class="gt_row gt_center"></td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td>
+<td headers="p.value" class="gt_row gt_center">0.004</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Less than high school</td>
+<td headers="stat_0" class="gt_row gt_center">2,055 (26.1%)</td>
+<td headers="stat_1" class="gt_row gt_center">1,050 (27.3%)</td>
+<td headers="stat_2" class="gt_row gt_center">1,005 (25.0%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Less than 5th grade</td>
+<td headers="stat_0" class="gt_row gt_center">1,142 (14.5%)</td>
+<td headers="stat_1" class="gt_row gt_center">570 (14.8%)</td>
+<td headers="stat_2" class="gt_row gt_center">572 (14.2%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;High school or GED</td>
+<td headers="stat_0" class="gt_row gt_center">1,480 (18.8%)</td>
+<td headers="stat_1" class="gt_row gt_center">745 (19.4%)</td>
+<td headers="stat_2" class="gt_row gt_center">735 (18.3%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;More than high school</td>
+<td headers="stat_0" class="gt_row gt_center">3,185 (40.5%)</td>
+<td headers="stat_1" class="gt_row gt_center">1,480 (38.5%)</td>
+<td headers="stat_2" class="gt_row gt_center">1,705 (42.4%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">1,392</td>
+<td headers="stat_1" class="gt_row gt_center">712</td>
+<td headers="stat_2" class="gt_row gt_center">680</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Poverty-Income Ratio</td>
+<td headers="stat_0" class="gt_row gt_center">2.4 (1.6)</td>
+<td headers="stat_1" class="gt_row gt_center">2.4 (1.6)</td>
+<td headers="stat_2" class="gt_row gt_center">2.4 (1.6)</td>
+<td headers="p.value" class="gt_row gt_center">0.073</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">1,231</td>
+<td headers="stat_1" class="gt_row gt_center">618</td>
+<td headers="stat_2" class="gt_row gt_center">613</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Red Blood Cell Count (million cells/uL)</td>
+<td headers="stat_0" class="gt_row gt_center">4.7 (0.5)</td>
+<td headers="stat_1" class="gt_row gt_center">4.9 (0.5)</td>
+<td headers="stat_2" class="gt_row gt_center">4.6 (0.4)</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">1,726</td>
+<td headers="stat_1" class="gt_row gt_center">885</td>
+<td headers="stat_2" class="gt_row gt_center">841</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">White blood cell count (1000 cells/uL)</td>
+<td headers="stat_0" class="gt_row gt_center">7.4 (5.1)</td>
+<td headers="stat_1" class="gt_row gt_center">7.3 (2.5)</td>
+<td headers="stat_2" class="gt_row gt_center">7.5 (6.7)</td>
+<td headers="p.value" class="gt_row gt_center">0.002</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">1,726</td>
+<td headers="stat_1" class="gt_row gt_center">885</td>
+<td headers="stat_2" class="gt_row gt_center">841</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Lymphocyte number (1000 cells/uL)</td>
+<td headers="stat_0" class="gt_row gt_center">2.5 (4.3)</td>
+<td headers="stat_1" class="gt_row gt_center">2.4 (1.6)</td>
+<td headers="stat_2" class="gt_row gt_center">2.6 (5.8)</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">1,731</td>
+<td headers="stat_1" class="gt_row gt_center">886</td>
+<td headers="stat_2" class="gt_row gt_center">845</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Segmented neutrophils num (1000 cell/uL)</td>
+<td headers="stat_0" class="gt_row gt_center">4.0 (1.7)</td>
+<td headers="stat_1" class="gt_row gt_center">4.0 (1.7)</td>
+<td headers="stat_2" class="gt_row gt_center">4.1 (1.8)</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">1,731</td>
+<td headers="stat_1" class="gt_row gt_center">886</td>
+<td headers="stat_2" class="gt_row gt_center">845</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Neutrophil:Lymphocyte Ratio</td>
+<td headers="stat_0" class="gt_row gt_center">1.9 (1.2)</td>
+<td headers="stat_1" class="gt_row gt_center">1.9 (1.2)</td>
+<td headers="stat_2" class="gt_row gt_center">1.9 (1.1)</td>
+<td headers="p.value" class="gt_row gt_center">0.3</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">1,731</td>
+<td headers="stat_1" class="gt_row gt_center">886</td>
+<td headers="stat_2" class="gt_row gt_center">845</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Iron (ug/dL)</td>
+<td headers="stat_0" class="gt_row gt_center">86.3 (36.7)</td>
+<td headers="stat_1" class="gt_row gt_center">93.8 (35.9)</td>
+<td headers="stat_2" class="gt_row gt_center">79.1 (36.0)</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">3,332</td>
+<td headers="stat_1" class="gt_row gt_center">1,683</td>
+<td headers="stat_2" class="gt_row gt_center">1,649</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Iron Status</td>
+<td headers="stat_0" class="gt_row gt_center"></td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Deficient</td>
+<td headers="stat_0" class="gt_row gt_center">1,376 (23.2%)</td>
+<td headers="stat_1" class="gt_row gt_center">427 (14.9%)</td>
+<td headers="stat_2" class="gt_row gt_center">949 (31.1%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Excessive</td>
+<td headers="stat_0" class="gt_row gt_center">142 (2.4%)</td>
+<td headers="stat_1" class="gt_row gt_center">91 (3.2%)</td>
+<td headers="stat_2" class="gt_row gt_center">51 (1.7%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Normal</td>
+<td headers="stat_0" class="gt_row gt_center">4,404 (74.4%)</td>
+<td headers="stat_1" class="gt_row gt_center">2,356 (82.0%)</td>
+<td headers="stat_2" class="gt_row gt_center">2,048 (67.2%)</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">3,332</td>
+<td headers="stat_1" class="gt_row gt_center">1,683</td>
+<td headers="stat_2" class="gt_row gt_center">1,649</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Arsenic, Total - Urine (ug/L)</td>
+<td headers="stat_0" class="gt_row gt_center">16.2 (64.3)</td>
+<td headers="stat_1" class="gt_row gt_center">14.6 (32.0)</td>
+<td headers="stat_2" class="gt_row gt_center">17.8 (84.7)</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">6,462</td>
+<td headers="stat_1" class="gt_row gt_center">3,180</td>
+<td headers="stat_2" class="gt_row gt_center">3,282</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Blood cadmium (ug/L)</td>
+<td headers="stat_0" class="gt_row gt_center">0.4 (0.5)</td>
+<td headers="stat_1" class="gt_row gt_center">0.3 (0.4)</td>
+<td headers="stat_2" class="gt_row gt_center">0.4 (0.6)</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">1,741</td>
+<td headers="stat_1" class="gt_row gt_center">891</td>
+<td headers="stat_2" class="gt_row gt_center">850</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Blood lead (ug/dL)</td>
+<td headers="stat_0" class="gt_row gt_center">1.1 (1.3)</td>
+<td headers="stat_1" class="gt_row gt_center">1.3 (1.6)</td>
+<td headers="stat_2" class="gt_row gt_center">0.9 (0.9)</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">2,370</td>
+<td headers="stat_1" class="gt_row gt_center">1,207</td>
+<td headers="stat_2" class="gt_row gt_center">1,163</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Cotinine, Serum (ng/mL)</td>
+<td headers="stat_0" class="gt_row gt_center">40.4 (111.6)</td>
+<td headers="stat_1" class="gt_row gt_center">52.5 (128.0)</td>
+<td headers="stat_2" class="gt_row gt_center">28.9 (92.0)</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Missing (n)</td>
+<td headers="stat_0" class="gt_row gt_center">2,153</td>
+<td headers="stat_1" class="gt_row gt_center">1,102</td>
+<td headers="stat_2" class="gt_row gt_center">1,051</td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="5"><sup class="gt_footnote_marks">1</sup> Mean (SD); n (%)</td>
+    </tr>
+    <tr>
+      <td class="gt_footnote" colspan="5"><sup class="gt_footnote_marks">2</sup> Wilcoxon rank sum test; Pearson's Chi-squared test</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the table as a Word document - some formatting such as bold headers will be lost</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>bivar_nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_flex_table</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save_as_docx</span>(<span class="at">path =</span> <span class="fu">here</span>(<span class="st">"summary_stats_table.docx"</span>)) <span class="co">#Export the table to Word using flextable package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="missing-data-date-variables-for-loops" class="level1">
+<h1>Missing data, date variables, for loops</h1>
+</section>
+<section id="do-any-of-our-variables-have-missing-values" class="level1">
+<h1>Do any of our variables have missing values?</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many participants have complete data on iron measures?</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(LBXIRN) <span class="sc">%&gt;%</span> <span class="co">#exclude any participants with missing iron data</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dim</span>() <span class="co">#what are the dimensions after excluding missing iron data?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5922   27</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many participants have complete data on all variables?</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> <span class="co">#exclude any participants with missing data</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dim</span>() <span class="co">#what are the dimensions after excluding missing data?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  0 27</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What variables have the most missing data?</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nhanes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      SEQN            RIASEX          sex          RIDAGEYR       age_groups  
+ Min.   : 93703   Min.   :1.000   Male  :4557   Min.   : 0.00   [0,16] :3250  
+ 1st Qu.: 96016   1st Qu.:1.000   Female:4697   1st Qu.:11.00   (16,32]:1519  
+ Median : 98330   Median :2.000                 Median :31.00   (32,48]:1349  
+ Mean   : 98330   Mean   :1.508                 Mean   :34.33   (48,64]:1636  
+ 3rd Qu.:100643   3rd Qu.:2.000                 3rd Qu.:58.00   (64,80]:1500  
+ Max.   :102956   Max.   :2.000                 Max.   :80.00                 
+                                                                              
+    RIDRETH1                   race_eth       INDFMPIR        DMDEDUC3    
+ Min.   :1.000   Non-Hispanic White:3150   Min.   :0.000   Min.   : 0.00  
+ 1st Qu.:3.000   Mexican American  :1367   1st Qu.:1.040   1st Qu.: 3.00  
+ Median :3.000   Non-Hispanic Black:2115   Median :1.920   Median : 6.00  
+ Mean   :3.234   Other Hispanic    : 820   Mean   :2.376   Mean   : 6.35  
+ 3rd Qu.:4.000   Other Race        :1802   3rd Qu.:3.690   3rd Qu.: 9.00  
+ Max.   :5.000                             Max.   :5.000   Max.   :66.00  
+                                           NA's   :1231    NA's   :6948   
+    DMDEDUC2     education_youth    education_adult   
+ Min.   :1.000   Length:9254        Length:9254       
+ 1st Qu.:3.000   Class :character   Class :character  
+ Median :4.000   Mode  :character   Mode  :character  
+ Mean   :3.526                                        
+ 3rd Qu.:4.000                                        
+ Max.   :9.000                                        
+ NA's   :3685                                         
+                 education       SDMVSTRA      SDMVPSU         LBXRBCSI    
+ Less than high school:2055   Min.   :134   Min.   :1.000   Min.   :2.320  
+ Less than 5th grade  :1142   1st Qu.:137   1st Qu.:1.000   1st Qu.:4.420  
+ High school or GED   :1480   Median :141   Median :2.000   Median :4.710  
+ More than high school:3185   Mean   :141   Mean   :1.518   Mean   :4.734  
+ NA's                 :1392   3rd Qu.:145   3rd Qu.:2.000   3rd Qu.:5.030  
+                              Max.   :148   Max.   :2.000   Max.   :7.840  
+                                                            NA's   :1726   
+    LBXWBCSI          LBDLYMNO          LBDNENO            nlr         
+ Min.   :  1.900   Min.   :  0.400   Min.   : 0.400   Min.   : 0.0933  
+ 1st Qu.:  5.800   1st Qu.:  1.800   1st Qu.: 2.800   1st Qu.: 1.1797  
+ Median :  7.000   Median :  2.300   Median : 3.800   Median : 1.6667  
+ Mean   :  7.383   Mean   :  2.502   Mean   : 4.035   Mean   : 1.8839  
+ 3rd Qu.:  8.500   3rd Qu.:  2.900   3rd Qu.: 4.900   3rd Qu.: 2.3077  
+ Max.   :400.000   Max.   :358.800   Max.   :35.200   Max.   :21.5000  
+ NA's   :1726      NA's   :1731      NA's   :1731     NA's   :1731     
+     LBXIRN          iron_status       URXUAS            LBXBCD       
+ Min.   : 11.00   Deficient:1376   Min.   :   0.16   Min.   : 0.0700  
+ 1st Qu.: 61.00   Excessive: 142   1st Qu.:   3.10   1st Qu.: 0.1200  
+ Median : 82.00   Normal   :4404   Median :   6.09   Median : 0.2200  
+ Mean   : 86.25   NA's     :3332   Mean   :  16.25   Mean   : 0.3736  
+ 3rd Qu.:106.00                    3rd Qu.:  12.23   3rd Qu.: 0.4200  
+ Max.   :481.00                    Max.   :2802.29   Max.   :13.0300  
+ NA's   :3332                      NA's   :6462      NA's   :1741     
+     LBXBPB           LBXCOT           cut_groups  
+ Min.   : 0.050   Min.   :   0.011   [0,8]  :1904  
+ 1st Qu.: 0.460   1st Qu.:   0.011   (8,20] :1857  
+ Median : 0.760   Median :   0.032   (20,42]:1868  
+ Mean   : 1.084   Mean   :  40.370   (42,62]:1884  
+ 3rd Qu.: 1.300   3rd Qu.:   0.567   (62,80]:1741  
+ Max.   :42.480   Max.   :1620.000                 
+ NA's   :2370     NA's   :2153                     </code></pre>
+</div>
+</div>
+</section>
+<section id="check-function-default-settings-for-handling-missing-values" class="level1">
+<h1>Check function default settings for handling missing values</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="do">### How do functions handle missing values?</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate summary statistics on iron</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nhanes<span class="sc">$</span>LBXIRN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  11.00   61.00   82.00   86.25  106.00  481.00    3332 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate the mean of iron</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(nhanes<span class="sc">$</span>LBXIRN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(nhanes<span class="sc">$</span>LBXIRN, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 86.25464</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co">#note the na.omit- remove all observations that include NAs</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">na.omit</span>(nhanes<span class="sc">$</span>LBXIRN))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 86.25464</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate a correlation between age and iron concentration</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(nhanes<span class="sc">$</span>RIDAGEYR, nhanes<span class="sc">$</span>LBXIRN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(nhanes<span class="sc">$</span>RIDAGEYR, nhanes<span class="sc">$</span>LBXIRN, <span class="at">use=</span><span class="st">"complete.obs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.01858113</code></pre>
+</div>
+</div>
+</section>
+<section id="try-compiling-results-with-a-for-loop" class="level1">
+<h1>Try compiling results with a for loop</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to the numeric variables, we'll be calculating numeric descriptive statistics</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>nhanes_numeric <span class="ot">&lt;-</span> nhanes <span class="sc">%&gt;%</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select_if</span>(is.numeric)</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="co"># First prep the output dataset - set up blank columns</span></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="fu">ncol</span>(nhanes_numeric), <span class="at">ncol =</span> <span class="dv">3</span>))</span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the column names for the dataframe</span></span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(out) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"variable"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>)</span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-11"><a href="#cb72-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull the column names from nhanes and set them as the values for the first column</span></span>
+<span id="cb72-12"><a href="#cb72-12" aria-hidden="true" tabindex="-1"></a>out[, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">colnames</span>(nhanes_numeric)</span>
+<span id="cb72-13"><a href="#cb72-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-14"><a href="#cb72-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Then initiate the loop</span></span>
+<span id="cb72-15"><a href="#cb72-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(nhanes_numeric)) {</span>
+<span id="cb72-16"><a href="#cb72-16" aria-hidden="true" tabindex="-1"></a>  out[i, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">mean</span>(nhanes_numeric[, i], <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb72-17"><a href="#cb72-17" aria-hidden="true" tabindex="-1"></a>  out[i, <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">sd</span>(nhanes_numeric[, i], <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb72-18"><a href="#cb72-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb72-19"><a href="#cb72-19" aria-hidden="true" tabindex="-1"></a>out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   variable     mean      sd
+1      SEQN 98329.50 2671.54
+2    RIASEX     1.51    0.50
+3  RIDAGEYR    34.33   25.50
+4  RIDRETH1     3.23    1.28
+5  INDFMPIR     2.38    1.60
+6  DMDEDUC3     6.35    5.84
+7  DMDEDUC2     3.53    1.24
+8  SDMVSTRA   140.97    4.20
+9   SDMVPSU     1.52    0.50
+10 LBXRBCSI     4.73    0.48
+11 LBXWBCSI     7.38    5.11
+12 LBDLYMNO     2.50    4.32
+13  LBDNENO     4.03    1.73
+14      nlr     1.88    1.15
+15   LBXIRN    86.25   36.73
+16   URXUAS    16.24   64.32
+17   LBXBCD     0.37    0.50
+18   LBXBPB     1.08    1.29
+19   LBXCOT    40.37  111.60</code></pre>
+</div>
+</div>
+</section>
+<section id="date-and-time-objects" class="level1">
+<h1>Date and Time objects</h1>
+</section>
+<section id="paste-function" class="level1">
+<h1>Paste function</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create some dates to use in this exercise</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>day <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"12"</span>, <span class="st">"13"</span>, <span class="st">"2"</span>)</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>month <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"07"</span>, <span class="st">"08"</span>, <span class="st">"11"</span>)</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>year <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1970"</span>,<span class="st">"1980"</span>, <span class="st">"2000"</span>, <span class="st">"1959"</span>)</span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="co"># combine (paste) two or more variables that are parts of date</span></span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>birth_days_chr <span class="ot">&lt;-</span> <span class="fu">paste</span>(month, day, year, <span class="at">sep =</span> <span class="st">"/"</span>)</span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(birth_days_chr) <span class="co"># This is a character vector, R doesn't yet know it is date information</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> chr [1:4] "1/1/1970" "07/12/1980" "08/13/2000" "11/2/1959"</code></pre>
+</div>
+</div>
+</section>
+<section id="create-date-vector" class="level1">
+<h1>Create date vector</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build a new date vector</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>birth_days_date <span class="ot">&lt;-</span> <span class="fu">make_date</span>(<span class="at">year =</span> year, <span class="at">month =</span> month, <span class="at">day =</span> day)</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(birth_days_date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Date[1:4], format: "1970-01-01" "1980-07-12" "2000-08-13" "1959-11-02"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(birth_days_date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]     0  3845 11182 -3713</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>birth_days_month <span class="ot">&lt;-</span> <span class="fu">month</span>(birth_days_date, <span class="at">label =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>birth_days_month</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Jan Jul Aug Nov
+12 Levels: Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; ... &lt; Dec</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># day of the week</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(birth_days_date, <span class="at">label =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Thu Sat Sun Mon
+Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat</code></pre>
+</div>
+</div>
+</section>
+<section id="calculate-age-as-of-todays-date" class="level1">
+<h1>Calculate age as of today’s date</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>date_today <span class="ot">&lt;-</span> <span class="fu">today</span>() <span class="co"># now() or today(): Current time/Date</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>date_today</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2023-01-29"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>current_age <span class="ot">&lt;-</span> (date_today <span class="sc">-</span> birth_days_date) <span class="sc">/</span> <span class="fl">365.25</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>current_age</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time differences in days
+[1] 53.07598 42.54894 22.46133 63.24162</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>current_age <span class="ot">&lt;-</span> <span class="fu">trunc</span>(<span class="fu">as.numeric</span>(current_age))</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create data frame</span></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>bd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Character =</span> birth_days_chr, <span class="at">Standard_Date =</span> birth_days_date, <span class="at">Numeric_Date =</span> <span class="fu">as.numeric</span>(birth_days_date), <span class="at">Age =</span> current_age)</span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>bd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Character Standard_Date Numeric_Date Age
+1   1/1/1970    1970-01-01            0  53
+2 07/12/1980    1980-07-12         3845  42
+3 08/13/2000    2000-08-13        11182  22
+4  11/2/1959    1959-11-02        -3713  63</code></pre>
+</div>
+</div>
+</section>
+<section id="remember-to-save-your-r-script" class="level1">
+<h1>Remember to save your R script!</h1>
+</section>
+<section id="to-exit-r" class="level1">
+<h1>To exit R</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># q()</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="do">## if you close R, you will be asked to save your workspace image</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
